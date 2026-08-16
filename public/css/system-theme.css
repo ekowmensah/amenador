@@ -1,0 +1,456 @@
+:root {
+    --system-blue: #1557b0;
+    --system-blue-dark: #0b2f6b;
+    --system-blue-deep: #071f4a;
+    --system-blue-soft: #eaf2ff;
+    --system-blue-pale: #f5f8ff;
+    --system-red: #d62839;
+    --system-red-dark: #a91627;
+    --system-red-soft: #fff0f2;
+    --system-border: #d8e3f2;
+    --system-text: #17243b;
+}
+
+/* DaisyUI/Tailwind controls */
+:root,
+[data-theme] {
+    --p: 49% 0.19 257;
+    --pc: 98% 0.01 257;
+    --s: 52% 0.21 24;
+    --sc: 98% 0.01 24;
+    --a: 49% 0.19 257;
+    --su: 49% 0.19 257;
+    --er: 52% 0.21 24;
+}
+
+/* AdminLTE shell and navigation */
+.skin-blue-light .main-header .navbar,
+.skin-blue .main-header .navbar,
+.main-header .navbar {
+    background: linear-gradient(90deg, var(--system-blue-dark), var(--system-blue)) !important;
+}
+
+.skin-blue-light .main-header .logo,
+.skin-blue .main-header .logo,
+.main-header .logo {
+    background: var(--system-blue-deep) !important;
+}
+
+.main-header a,
+.main-header .navbar .nav > li > a,
+.main-header .sidebar-toggle { color: #fff !important; }
+
+/* High-contrast POS launcher in the application header. */
+.main-header .header-pos-launch,
+.header-pos-launch {
+    min-height: 38px;
+    padding: 8px 15px !important;
+    border: 1px solid rgba(255, 255, 255, .28) !important;
+    border-radius: 10px !important;
+    background: var(--system-red) !important;
+    color: #fff !important;
+    box-shadow: 0 7px 18px rgba(109, 10, 25, .25) !important;
+    opacity: 1 !important;
+}
+
+.main-header .header-pos-launch svg,
+.header-pos-launch svg {
+    color: #fff !important;
+    stroke: currentColor !important;
+    opacity: 1 !important;
+}
+
+.main-header .header-pos-launch:hover,
+.main-header .header-pos-launch:focus,
+.header-pos-launch:hover,
+.header-pos-launch:focus {
+    border-color: #fff !important;
+    background: var(--system-red-dark) !important;
+    color: #fff !important;
+    box-shadow: 0 9px 22px rgba(109, 10, 25, .34) !important;
+    transform: translateY(-1px);
+}
+
+.skin-blue-light .main-sidebar,
+.skin-blue-light .left-side,
+.skin-blue .main-sidebar,
+.skin-blue .left-side,
+.main-sidebar,
+.left-side {
+    background: #0b2349 !important;
+}
+
+.skin-blue-light .sidebar-menu > li:hover > a,
+.skin-blue-light .sidebar-menu > li.active > a,
+.skin-blue .sidebar-menu > li:hover > a,
+.skin-blue .sidebar-menu > li.active > a,
+.sidebar-menu > li:hover > a,
+.sidebar-menu > li.active > a {
+    border-left-color: var(--system-red) !important;
+    background: #12366d !important;
+    color: #fff !important;
+}
+
+.skin-blue-light .sidebar-menu > li > .treeview-menu,
+.skin-blue .sidebar-menu > li > .treeview-menu,
+.sidebar-menu > li > .treeview-menu {
+    background: #081c3b !important;
+}
+
+.skin-blue-light .sidebar a,
+.skin-blue .sidebar a,
+.sidebar a { color: #dce9ff !important; }
+.skin-blue-light .sidebar-menu .treeview-menu > li.active > a,
+.skin-blue-light .sidebar-menu .treeview-menu > li > a:hover,
+.skin-blue .sidebar-menu .treeview-menu > li.active > a,
+.skin-blue .sidebar-menu .treeview-menu > li > a:hover,
+.sidebar-menu .treeview-menu > li.active > a,
+.sidebar-menu .treeview-menu > li > a:hover { color: #fff !important; }
+
+/* Shared controls */
+.btn-primary,
+.bg-blue,
+.bg-light-blue,
+.label-primary,
+.pagination > .active > a,
+.pagination > .active > span {
+    border-color: var(--system-blue-dark) !important;
+    background-color: var(--system-blue) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    border-color: var(--system-blue-deep) !important;
+    background-color: var(--system-blue-dark) !important;
+}
+
+.btn-success,
+.bg-green,
+.label-success {
+    border-color: var(--system-blue-dark) !important;
+    background-color: var(--system-blue) !important;
+}
+
+.btn-danger,
+.bg-red,
+.label-danger,
+.tw-dw-btn-error {
+    border-color: var(--system-red-dark) !important;
+    background-color: var(--system-red) !important;
+    color: #fff !important;
+}
+
+.text-primary,
+.text-blue,
+a:not(.btn):not(.tw-dw-btn) { color: var(--system-blue); }
+.text-danger,
+.text-red { color: var(--system-red) !important; }
+
+.form-control:focus,
+.select2-container--default.select2-container--focus .select2-selection,
+.select2-container--default.select2-container--open .select2-selection {
+    border-color: var(--system-blue) !important;
+    box-shadow: 0 0 0 3px rgba(21, 87, 176, .12) !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] { accent-color: var(--system-blue); }
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover { border-top-color: var(--system-blue) !important; }
+
+.box.box-primary { border-top-color: var(--system-blue) !important; }
+.box.box-danger { border-top-color: var(--system-red) !important; }
+.modal-header { border-top: 3px solid var(--system-blue); }
+.alert-danger { border-color: #f3b9c0; background: var(--system-red-soft); color: var(--system-red-dark); }
+.alert-info,
+.alert-success { border-color: #bdd2f1; background: var(--system-blue-soft); color: var(--system-blue-dark); }
+
+/* Custom dashboard and POS design tokens */
+.home-dashboard {
+    --dash-green: var(--system-blue);
+    --dash-green-dark: var(--system-blue-dark);
+    --dash-green-soft: var(--system-blue-soft);
+    --dash-text: var(--system-text);
+    --dash-border: var(--system-border);
+}
+
+.home-dashboard .dashboard-hero {
+    background: linear-gradient(135deg, var(--system-blue-deep), var(--system-blue)) !important;
+}
+
+.home-dashboard .admin-line--sales { stroke: var(--system-blue) !important; }
+.home-dashboard .admin-chart-legend .is-sales,
+.home-dashboard .admin-bar-track span,
+.home-dashboard .admin-ranking-row div > i { background: var(--system-blue) !important; }
+.home-dashboard .admin-risk:not(.admin-risk--critical):not(.admin-risk--warning) > i {
+    background: var(--system-blue-soft) !important;
+    color: var(--system-blue) !important;
+}
+
+body {
+    --pos-primary: var(--system-blue);
+    --pos-primary-dark: var(--system-blue-dark);
+    --pos-primary-soft: var(--system-blue-soft);
+    --pos-text: var(--system-text);
+    --pos-border: var(--system-border);
+}
+
+.pos-v2-brand,
+.pos-v2-header-brand,
+.pos-v2-header .pos-v2-header-brand,
+.pos-v2-payment-primary,
+.pos-v2-checkout,
+.pos-v2-finalize,
+.register-open-icon {
+    background: linear-gradient(135deg, var(--system-blue-dark), var(--system-blue)) !important;
+}
+
+.pos-v2-remove,
+.pos-v2-cancel,
+.pos-v2-close-register,
+.register-report-variance.is-short {
+    border-color: #f3c1c7 !important;
+    background: var(--system-red-soft) !important;
+    color: var(--system-red) !important;
+}
+
+.pos-v2-product-card.is-selected,
+.pos-v2-catalogue-filter.is-active,
+.register-report-status.is-open {
+    border-color: #a9c6ec !important;
+    background: var(--system-blue-soft) !important;
+    color: var(--system-blue-dark) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border-color: var(--system-blue) !important;
+    background: var(--system-blue) !important;
+    color: #fff !important;
+}
+
+/* Keep financial/status semantics legible within the two-color identity. */
+.is-positive,
+.is-balanced { color: var(--system-blue) !important; }
+.is-negative,
+.is-short,
+.out-of-stock { color: var(--system-red) !important; }
+
+::selection { background: #cfe0fb; color: var(--system-blue-deep); }
+
+/* Dashboard: remove legacy green surfaces and data accents. */
+.home-dashboard {
+    background: #f3f6fb !important;
+}
+.home-dashboard .admin-intelligence__status > span {
+    background: var(--system-red) !important;
+    box-shadow: 0 0 0 5px var(--system-red-soft) !important;
+}
+.home-dashboard .admin-kpi-card,
+.home-dashboard .admin-insight-card,
+.home-dashboard .dashboard-panel {
+    border-color: var(--system-border) !important;
+    box-shadow: 0 6px 22px rgba(7, 31, 74, .07) !important;
+}
+.home-dashboard .admin-kpi-card--sales,
+.home-dashboard .admin-kpi-card--operating,
+.home-dashboard .dashboard-kpi--sales,
+.home-dashboard .dashboard-kpi--profit {
+    --kpi-accent: #dce9fb !important;
+    --kpi-tint: #dce9fb !important;
+}
+.home-dashboard .admin-kpi-card small.is-positive {
+    color: var(--system-blue) !important;
+}
+.home-dashboard .admin-skeleton {
+    background: linear-gradient(90deg,#edf2fa 25%,#fafcff 50%,#edf2fa 75%) !important;
+}
+.home-dashboard .admin-grid-line { stroke: #d8e3f2 !important; }
+.home-dashboard .admin-line--sales { stroke: var(--system-blue) !important; }
+.home-dashboard .admin-chart-legend .is-sales { background: var(--system-blue) !important; }
+.home-dashboard .admin-bar-track { background: #e8eef8 !important; }
+.home-dashboard .admin-bar-track span {
+    background: linear-gradient(90deg,var(--system-blue-dark),var(--system-blue)) !important;
+}
+.home-dashboard .admin-data-table td,
+.home-dashboard .admin-data-table th,
+.home-dashboard .dashboard-panel table.dataTable tbody td,
+.home-dashboard .dashboard-panel table.dataTable thead th {
+    border-color: #e5ebf4 !important;
+}
+.home-dashboard .admin-data-table td,
+.home-dashboard .admin-bar-label span,
+.home-dashboard .admin-ranking-row b,
+.home-dashboard .admin-risk b { color: #40516b !important; }
+.home-dashboard .admin-stat-stack > div,
+.home-dashboard .admin-risk {
+    border-color: #e0e8f3 !important;
+    background: #f8faff !important;
+}
+.home-dashboard .admin-risk:not(.admin-risk--critical):not(.admin-risk--warning) > i,
+.home-dashboard .admin-ranking-row > span,
+.home-dashboard .admin-rank-number {
+    background: var(--system-blue-soft) !important;
+    color: var(--system-blue) !important;
+}
+.home-dashboard .dashboard-security-context i,
+.home-dashboard .dashboard-eyebrow { color: #dce9ff !important; }
+.home-dashboard .dashboard-command-bar { background: rgba(7,31,74,.22) !important; }
+.home-dashboard .dashboard-kpi,
+.home-dashboard .dashboard-panel:hover {
+    border-color: #c6d7ee !important;
+    box-shadow: 0 12px 30px rgba(7,31,74,.11) !important;
+}
+.home-dashboard .dashboard-workflow-panel { border-top-color: var(--system-blue) !important; }
+.home-dashboard .dashboard-chart-panel [class*="tw-h-100"],
+.home-dashboard .dashboard-collapse-toggle { background: #f5f8ff !important; }
+
+/* POS/create and cash-register screens: blue primary, red exceptional states. */
+.pos-v2-shell,
+.register-open-page,
+.register-report-page {
+    --pos-bg: #f3f6fb;
+    --pos-surface-soft: #f7f9fd;
+    --pos-border: #d8e3f2;
+    --pos-border-strong: #bfd0e8;
+    --pos-muted: #64748b;
+    --pos-shadow: 0 10px 32px rgba(7,31,74,.09);
+}
+.register-open-page {
+    background: radial-gradient(circle at 8% 12%,rgba(21,87,176,.13),transparent 28%),linear-gradient(145deg,#edf3fc,#fafcff 48%,#e8f0fb) !important;
+}
+.register-open-card,
+.register-report-table-card,
+.register-report-filters,
+.register-report-summary article {
+    border-color: var(--system-border) !important;
+    box-shadow: 0 12px 34px rgba(7,31,74,.09) !important;
+}
+.register-open-card > header,
+.register-report-hero,
+.pos-payment-modal-header,
+#modal_payment .modal-header {
+    background: linear-gradient(135deg,#f4f8ff,#fff) !important;
+    border-color: var(--system-border) !important;
+}
+.register-open-eyebrow,
+.register-open-input > i,
+.register-open-input > b,
+.register-report-hero > div > span,
+.register-report-hero aside > i,
+.register-report-date i,
+.register-report-summary strong,
+.register-details-footer > span i,
+.register-product-insights em,
+.register-activity-list em {
+    color: var(--system-blue) !important;
+}
+.register-open-principles article > i,
+.register-opening-denominations section > header,
+.register-opening-payment-mode,
+.register-activity-type,
+.register-report-status.is-open,
+.register-report-variance.is-balanced {
+    border-color: #c7d9f1 !important;
+    background: var(--system-blue-soft) !important;
+    color: var(--system-blue) !important;
+}
+.register-open-icon,
+.register-footer-button.is-primary {
+    border-color: var(--system-blue-dark) !important;
+    background: linear-gradient(135deg,var(--system-blue-dark),var(--system-blue)) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(21,87,176,.22) !important;
+}
+.register-opening-count-total,
+.pos-denomination-total {
+    border-color: #bfd3ef !important;
+    background: var(--system-blue-soft) !important;
+}
+.register-opening-count-total strong,
+.register-opening-denomination-row > strong,
+.pos-denomination-row .denomination_subtotal,
+.pos-denomination-total strong,
+#modal_payment .pos-payment-stat-balance .lead {
+    color: var(--system-blue) !important;
+}
+.pos-v2-shell,
+.pos-v2-cart-body,
+.pos-v2-catalog-panel,
+.pos-v2-panel,
+.pos-v2-summary-strip,
+.pos-v2-footer {
+    border-color: var(--system-border) !important;
+    box-shadow: none;
+}
+.pos-v2-panel-head,
+.pos-v2-cart-table thead,
+.pos-v2-cart-table thead th,
+.pos-denomination-group > header,
+.pos-stock-filter,
+.pos-v2-catalogue-toolbar {
+    border-color: var(--system-border) !important;
+    background: #f3f7fd !important;
+}
+.pos-v2-shell .text-primary,
+.pos-v2-shell .fa-info-circle,
+.pos-catalog-ready i,
+.pos-product-price,
+.pos-stock-filter button.is-active,
+.pos-stock-filter button[data-active="true"] {
+    color: var(--system-blue) !important;
+}
+.pos-catalog-ready i { color: var(--system-red) !important; }
+.pos-stock-filter button:hover,
+.pos-stock-filter button.is-active,
+.pos-stock-filter button[data-active="true"] {
+    border-color: #aac5e9 !important;
+    background: var(--system-blue-soft) !important;
+}
+.pos-product-card,
+.pos-product-tile,
+.pos-v2-product-card {
+    border-color: #d8e3f2 !important;
+    background: #fff !important;
+    box-shadow: 0 4px 14px rgba(7,31,74,.07) !important;
+}
+.pos-product-card:hover,
+.pos-product-tile:hover,
+.pos-v2-product-card:hover,
+.pos-v2-product-card.is-selected {
+    border-color: #8fb3e3 !important;
+    box-shadow: 0 9px 22px rgba(21,87,176,.14) !important;
+}
+.pos-product-stock:not(.is-empty) {
+    border-color: #bed3ef !important;
+    background: rgba(234,242,255,.97) !important;
+    color: var(--system-blue) !important;
+}
+.pos-v2-shell .btn-success,
+.pos-v2-shell .bg-green,
+.pos-v2-shell .tw-bg-green-500,
+.pos-v2-shell .tw-bg-green-700,
+.pos-payment-footer-actions .pos-payment-submit,
+.pos-v2-finalize,
+.pos-v2-checkout {
+    border-color: var(--system-blue-dark) !important;
+    background: linear-gradient(135deg,var(--system-blue-dark),var(--system-blue)) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 20px rgba(21,87,176,.22) !important;
+}
+.pos-v2-shell .text-success,
+.pos-v2-shell .tw-text-green-500,
+.pos-v2-shell .tw-text-green-900 { color: var(--system-blue) !important; }
+#modal_payment .modal-content,
+.pos-denomination-group,
+.pos-payment-summary {
+    border-color: var(--system-border) !important;
+    box-shadow: 0 12px 32px rgba(7,31,74,.1) !important;
+}
+#modal_payment .pos-payment-footer-actions .pos-payment-close {
+    background: #eef3fa !important;
+    color: #344a69 !important;
+}

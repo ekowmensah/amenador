@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prakanddaughters.com/sitemap.xml
