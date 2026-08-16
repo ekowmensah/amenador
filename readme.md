@@ -1,4 +1,4 @@
-## About Ultimate POS
+## About ADOMGRACE LEGACY POS
 
 AdomGrace Legacy POS is a POS application by MensWeb Solutions.
 
