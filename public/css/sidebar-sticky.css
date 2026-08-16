@@ -1,0 +1,55 @@
+/* Keep the application navigation available while the workspace scrolls. */
+@media (min-width: 992px) {
+    aside.side-bar {
+        position: sticky !important;
+        top: 0;
+        align-self: flex-start;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: 100vh;
+        max-height: 100dvh;
+        overflow: hidden;
+        z-index: 40;
+        border-right: 1px solid #e2ebe5;
+        box-shadow: 4px 0 18px rgba(21, 68, 44, .045);
+    }
+
+    aside.side-bar > .sidebar-menu {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: #b9d2c2 transparent;
+    }
+
+    aside.side-bar > .sidebar-menu::-webkit-scrollbar { width: 6px; }
+    aside.side-bar > .sidebar-menu::-webkit-scrollbar-track { background: transparent; }
+    aside.side-bar > .sidebar-menu::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background: #b9d2c2;
+    }
+}
+
+@media (max-width: 991px) {
+    aside.side-bar.small-view-side-active {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed !important;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 100vh !important;
+        height: 100dvh !important;
+        overflow: hidden;
+        z-index: 1000;
+    }
+
+    aside.side-bar.small-view-side-active > .sidebar-menu {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}
