@@ -1213,7 +1213,7 @@ $(document).ready(function () {
         },
     });
 
-    $(document).on('change', '.payment-amount', function () {
+    $(document).on('input change', '.payment-amount', function () {
         calculate_balance_due();
     });
 
