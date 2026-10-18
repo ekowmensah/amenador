@@ -104,14 +104,8 @@ class SellController extends Controller
                 $sells->where('transactions.created_by', request()->session()->get('user.id'));
             }
 
-            // This installation has a composite index tailored to the regular
-            // sales filters. MariaDB otherwise chooses the low-cardinality
-            // business_id index and scans/sorts almost the entire table before
-            // applying the DataTables LIMIT.
-            if ($sale_type == 'sell') {
-                $index = $only_pending_shipments ? 'idx_dashboard_shipments' : 'idx_sales_report';
-                $sells->from(DB::raw('transactions FORCE INDEX ('.$index.')'));
-            }
+            // Let the database choose an available index. Custom report indexes
+            // may be absent on restored or upgraded installations.
 
             // only display sell invoice we add it because project invoive show in sell list
             if($sale_type == 'sell'){

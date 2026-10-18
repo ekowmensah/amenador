@@ -1,0 +1,114 @@
+﻿/* Customer-facing POS displays: 1024 x 600 baseline, fluid up to desktop sizes. */
+* { box-sizing: border-box; }
+:root { --header-height: 68px; --gold: #d5ad73; --cream: #f6efe4; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: #141210; color: #f5eee3; font: 15px Arial, sans-serif; display: grid; grid-template-rows: var(--header-height) minmax(0, 1fr); height: 100vh; height: 100dvh; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+[hidden] { display: none !important; }
+.display-header { padding: 0 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #d5ad732b; gap: 16px; min-width: 0; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand > div { min-width: 0; }
+.brand-icon { font-size: 34px; color: var(--gold); }
+.brand strong { display: block; font: 22px Georgia, serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand small { display: block; margin-top: 5px; font-size: 10px; letter-spacing: .14em; color: #ba9f7a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.display-tools { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
+.display-tools > span { font-size: 11px; color: #b5aa9b; }
+.display-tools button { border: 1px solid #d5ad7355; border-radius: 6px; padding: 9px 12px; background: transparent; color: var(--gold); font-size: 12px; }
+.display-grid { display: grid; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); min-height: 0; overflow: hidden; }
+.display-welcome { padding: 30px 26px 22px; position: relative; overflow: hidden; border-right: 1px solid #d5ad732b; display: flex; flex-direction: column; min-height: 0; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .15em; color: var(--gold); }
+.display-welcome > .eyebrow, .display-welcome h1, .display-welcome > p { position: relative; z-index: 1; }
+.display-welcome h1 { font: normal clamp(34px, 4vw, 62px)/1.08 Georgia, serif; margin: 18px 0 12px; letter-spacing: -.025em; }
+.display-welcome h1 em { font-weight: normal; color: var(--gold); }
+.display-welcome > p { font-size: 13px; color: #b5aa9b; line-height: 1.6; max-width: 230px; margin: 0; }
+.display-welcome img { position: absolute; width: 100%; height: 65%; object-fit: contain; right: -8%; bottom: 0; opacity: .8; }
+.welcome-note { margin-top: auto; position: relative; z-index: 1; padding-top: 20px; }
+.welcome-note span { font-size: 9px; letter-spacing: .15em; color: var(--gold); }
+.welcome-note p { color: #b5aa9b; font: italic 16px/1.5 Georgia, serif; max-width: 210px; margin-bottom: 0; }
+.order-panel { background: var(--cream); color: #30271e; padding: 24px 28px 14px; display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; }
+.order-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-shrink: 0; }
+.order-heading .eyebrow { color: #846139; font-size: 9px; }
+.order-heading h2 { font: normal 32px Georgia, serif; margin: 8px 0 18px; }
+.order-heading > span { background: #e9ddcb; border-radius: 20px; padding: 8px 12px; color: #70583a; font-size: 12px; flex-shrink: 0; }
+.order-columns, .order-item { display: grid; grid-template-columns: minmax(0, 1fr) 55px minmax(110px, auto); gap: 12px; align-items: center; }
+.order-columns { color: #806a51; font-size: 10px; letter-spacing: .1em; border-bottom: 1px solid #d9cdba; padding-bottom: 10px; flex-shrink: 0; }
+.order-columns > span:not(:first-child), .order-item > span { text-align: right; }
+.order-scroll { overflow: auto; min-height: 0; flex: 1 1 0; scrollbar-width: thin; scrollbar-color: #c4ae90 transparent; overscroll-behavior: contain; }
+.order-scroll:empty { display: none; }
+.order-item { padding: 14px 0; border-bottom: 1px solid #e5dacb; font-size: 17px; }
+.order-item > div { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.order-item small { font-size: 10px; color: #90795d; flex-shrink: 0; }
+.order-item strong { font-size: 17px; font-weight: 500; overflow-wrap: anywhere; line-height: 1.35; }
+.order-item > span { font-variant-numeric: tabular-nums; }
+.order-item > span:last-child { font-weight: 600; overflow-wrap: anywhere; }
+.empty-order { text-align: center; padding: 12px; flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #7c6a54; overflow: hidden; }
+.empty-order > span { font-size: 36px; color: #a87f47; }
+.empty-order h3 { font: normal 24px Georgia, serif; color: #64503a; margin: 12px 0; }
+.empty-order p { font-size: 13px; line-height: 1.6; margin: 0; max-width: 320px; }
+.order-totals { border-top: 1px solid #d9cdba; padding-top: 10px; margin-top: 10px; flex-shrink: 0; }
+.order-totals > div { display: flex; justify-content: space-between; gap: 15px; padding: 5px 0; font-size: 13px; color: #755f47; }
+.order-totals strong { font-weight: 500; font-variant-numeric: tabular-nums; color: #403226; }
+.order-totals .grand-total { margin-top: 10px; background: #30261c; color: #f5e6cd; padding: 18px 20px; border-radius: 8px; align-items: center; }
+.grand-total > div { min-width: 0; }
+.grand-total > div > span { font-size: 15px; }
+.grand-total small { display: block; margin-top: 7px; color: #cdb99e; font-size: 10px; }
+.grand-total > strong { font-size: clamp(30px, 3.7vw, 48px); color: #edcb96; font-weight: 600; overflow-wrap: anywhere; text-align: right; }
+.order-footer { display: flex; justify-content: space-between; gap: 15px; margin-top: 12px; font-size: 10px; color: #806a51; flex-shrink: 0; }
+@media (min-width: 1400px) and (min-height: 800px) {
+    :root { --header-height: 88px; }
+    .display-header { padding-inline: 40px; }
+    .display-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+    .order-panel { padding: 36px 45px 24px; }
+    .display-welcome { padding: 45px; }
+    .order-item, .order-item strong { font-size: 20px; }
+    .order-item { padding-block: 20px; }
+}
+@media (max-height: 650px) {
+    :root { --header-height: 58px; }
+    .display-welcome { padding: 24px; }
+    .display-welcome h1 { font-size: clamp(30px, 3.5vw, 44px); }
+    .display-welcome img { height: 67%; bottom: -32px; }
+    .welcome-note { display: none; }
+    .order-panel { padding: 16px 22px 10px; }
+    .order-heading h2 { font-size: 27px; margin: 5px 0 12px; }
+    .order-item { padding-block: 11px; }
+    .order-totals > div { padding-block: 4px; }
+    .order-totals .grand-total { padding: 13px 16px; }
+    .grand-total > strong { font-size: clamp(30px, 3.5vw, 42px); }
+    .order-footer { margin-top: 9px; }
+}
+@media (max-width: 900px) {
+    .display-grid { grid-template-columns: minmax(0, 1fr); }
+    .display-welcome { display: none; }
+    .display-header { padding-inline: 18px; }
+    .brand strong { font-size: 20px; }
+    .display-tools { gap: 10px; }
+    .display-tools button span { display: none; }
+}
+@media (max-height: 480px) {
+    :root { --header-height: 48px; }
+    .brand strong { font-size: 18px; }
+    .brand small { font-size: 9px; margin-top: 3px; }
+    .brand-icon { font-size: 27px; }
+    .order-heading .eyebrow, .order-footer, .grand-total small { display: none; }
+    .order-heading h2 { font-size: 24px; margin: 0 0 9px; }
+    .order-panel { padding: 12px 18px; }
+    .order-totals { margin-top: 6px; padding-top: 6px; }
+    .order-totals > div { padding-block: 3px; }
+    .order-totals .grand-total { padding: 10px 14px; margin-top: 6px; }
+    .grand-total > strong { font-size: 30px; }
+    .empty-order > span { display: none; }
+    .empty-order h3 { font-size: 20px; margin: 6px 0; }
+}
+@media (max-width: 480px) {
+    .brand-icon, .display-tools > span { display: none; }
+    .brand strong { font-size: 18px; }
+    .order-panel { padding-inline: 16px; }
+    .order-columns, .order-item { grid-template-columns: minmax(0, 1fr) 35px 98px; gap: 8px; }
+    .order-item, .order-item strong { font-size: 15px; }
+    .order-item small { display: none; }
+    .grand-total small { max-width: 110px; }
+    .grand-total > strong { font-size: 28px; }
+    .order-footer { font-size: 9px; }
+}

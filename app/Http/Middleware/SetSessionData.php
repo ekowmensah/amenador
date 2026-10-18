@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Business;
+use App\Currency;
 use App\Utils\BusinessUtil;
 use Closure;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,15 @@ class SetSessionData
             //set current financial year to session
             $financial_year = $business_util->getCurrentFinancialYear($business->id);
             $request->session()->put('financial_year', $financial_year);
+        }
+
+        // Refresh symbols cached before an encoding repair without logging out.
+        $symbol = $request->session()->get('currency.symbol');
+        if (is_string($symbol) && strpos($symbol, '?') !== false) {
+            $currency = Currency::find($request->session()->get('currency.id'));
+            if ($currency && strpos($currency->symbol, '?') === false) {
+                $request->session()->put('currency.symbol', $currency->symbol);
+            }
         }
 
         return $next($request);

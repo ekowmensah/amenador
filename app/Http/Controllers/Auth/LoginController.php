@@ -74,7 +74,7 @@ class LoginController extends Controller
         request()->session()->flush();
         \Auth::logout();
 
-        return redirect()->away(config('constants.public_site_url', 'https://prakanddaughters.com'));
+        return redirect()->route('login');
     }
 
     /**

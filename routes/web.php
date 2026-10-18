@@ -117,6 +117,7 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
     Route::get('/sign-in-as-user/{id}', [ManageUserController::class, 'signInAsUser'])->name('sign-in-as-user');
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/pos/customer-display', [SellPosController::class, 'customerDisplay'])->name('pos.customer-display');
     Route::get('/home/get-totals', [HomeController::class, 'getTotals']);
     Route::get('/home/admin-analytics', [HomeController::class, 'getAdminAnalytics']);
     Route::get('/home/product-stock-alert', [HomeController::class, 'getProductStockAlert']);

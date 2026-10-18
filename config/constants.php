@@ -53,6 +53,7 @@ return [
 
     'administrator_usernames' => env('ADMINISTRATOR_USERNAMES'),
     'allow_registration' => env('ALLOW_REGISTRATION', true),
+    'show_business_locations_menu' => env('SHOW_BUSINESS_LOCATIONS_MENU', true),
     'app_title' => env('APP_TITLE'),
     'public_catalog_business_id' => env('PUBLIC_CATALOG_BUSINESS_ID', 1),
     'public_site_url' => env('PUBLIC_SITE_URL', 'https://prakanddaughters.com'),

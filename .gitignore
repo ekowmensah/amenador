@@ -12,6 +12,10 @@ npm-debug.log
 .env
 .env.*
 !.env.example
+# Local database exports and backup archives
+/*.sql
+/*.sql.gz
+/storage/app/backups/
 # /public/uploads/business_logos
 # /public/uploads/documents
 # /public/uploads/img

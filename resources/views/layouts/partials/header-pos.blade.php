@@ -40,6 +40,12 @@
     </div>
 
     <nav class="clean-pos-actions" aria-label="POS navigation">
+        @if (request()->is('pos/create'))
+            <button type="button" id="open-customer-display" class="clean-pos-action"
+                data-url="{{ route('pos.customer-display') }}" title="Open customer display" aria-label="Open customer display">
+                <i class="fas fa-desktop" aria-hidden="true"></i><span>Customer display</span>
+            </button>
+        @endif
         <button type="button" class="clean-pos-action hover-q" title="Keyboard shortcuts"
             aria-label="Keyboard shortcuts" data-container="body" data-toggle="popover"
             data-placement="bottom" data-content="@include('sale_pos.partials.keyboard_shortcuts_details')"

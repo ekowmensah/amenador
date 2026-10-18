@@ -101,6 +101,7 @@
 
 @section('javascript')
     <script src="{{ asset('js/pos.js?v=' . filemtime(public_path('js/pos.js'))) }}"></script>
+    <script src="{{ asset('js/customer-display-pos.js?v=' . filemtime(public_path('js/customer-display-pos.js'))) }}"></script>
     <script src="{{ asset('js/printer.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/product.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/opening_stock.js?v=' . $asset_v) }}"></script>
