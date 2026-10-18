@@ -2,6 +2,13 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
+                {!! Form::label('login_phone', 'Login page phone number:') !!}
+                {!! Form::tel('common_settings[login_phone]', $common_settings['login_phone'] ?? null, ['class' => 'form-control', 'id' => 'login_phone', 'maxlength' => 40, 'placeholder' => 'e.g. +233 24 123 4567']); !!}
+                <p class="help-block">Shown publicly on the login page. Leave blank to use the main business location's phone number.</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
                 {!! Form::label('name',__('business.business_name') . ':*') !!}
                 {!! Form::text('name', $business->name, ['class' => 'form-control', 'required',
                 'placeholder' => __('business.business_name')]); !!}

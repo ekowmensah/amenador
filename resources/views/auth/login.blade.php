@@ -63,9 +63,11 @@
 
             <div class="modern-login-footnote">
                 <a href="{{ url('/') }}">&larr; Back to the bar</a>
-                <a href="https://wa.me/233545644749" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-phone-alt" aria-hidden="true"></i> 0545644749
-                </a>
+                @if (!empty($loginPhone) && !empty($loginPhoneHref))
+                    <a href="tel:{{ $loginPhoneHref }}">
+                        <i class="fas fa-phone-alt" aria-hidden="true"></i> {{ $loginPhone }}
+                    </a>
+                @endif
             </div>
         </section>
 

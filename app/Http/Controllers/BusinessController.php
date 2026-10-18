@@ -351,6 +351,10 @@ class BusinessController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $request->validate([
+            'common_settings.login_phone' => ['nullable', 'string', 'max:40', 'regex:/^\+?[0-9\s().-]+$/'],
+        ]);
+
         try {
             $notAllowed = $this->businessUtil->notAllowedInDemo();
             if (! empty($notAllowed)) {
