@@ -1,5 +1,6 @@
 @extends('layouts.auth2')
 @section('title', __('lang_v1.login'))
+@section('body_class', 'public-layout-'.$pageLayout)
 @inject('request', 'Illuminate\Http\Request')
 
 @section('content')
@@ -30,39 +31,34 @@
     @endphp
 
     <link rel="stylesheet" href="{{ asset('css/bar-pages.css?v=' . filemtime(public_path('css/bar-pages.css'))) }}">
+    <link rel="stylesheet" href="{{ asset('css/public-page-layouts.css?v=' . filemtime(public_path('css/public-page-layouts.css'))) }}">
     <main class="modern-login-shell">
-        <section class="modern-login-visual" aria-label="{{ config('app.name', 'ultimatePOS') }}">
+        <section class="modern-login-visual" aria-label="{{ $publicBusinessName }}">
             <div class="modern-login-brand">
-                <span class="modern-login-brand-mark"><i class="fas fa-cocktail" aria-hidden="true"></i></span>
-                <span>{{ config('app.name', 'ultimatePOS') }}</span>
+                <span class="modern-login-brand-mark"><i class="fas {{ $pagePreset['login_icon'] }}" aria-hidden="true"></i></span>
+                <span>{{ $publicBusinessName }}</span>
             </div>
 
             <div class="modern-login-copy">
-                <span class="modern-login-eyebrow"><i class="fas fa-glass-martini-alt" aria-hidden="true"></i> Behind the bar</span>
-                <h1>Good nights.<br>Great service.</h1>
-                <p>Your shift starts here. Keep orders flowing, tabs organised and your bar running smoothly, from the first pour to the last call.</p>
+                <span class="modern-login-eyebrow"><i class="fas {{ $pagePreset['login_icon'] }}" aria-hidden="true"></i> {{ $pagePreset['login_eyebrow'] }}</span>
+                <h1>{{ $pagePreset['login_title'] }}<br>{{ $pagePreset['login_emphasis'] }}</h1>
+                <p>{{ $pagePreset['login_text'] }}</p>
                 <div class="modern-login-points">
                     <span><i class="fas fa-shield-alt"></i> Secure access</span>
-                    <span><i class="fas fa-check-circle"></i> Every pour accounted for</span>
+                    <span><i class="fas fa-check-circle"></i> {{ $pagePreset['login_point'] }}</span>
                 </div>
                 <div class="mart-preview" aria-hidden="true">
-                    <div class="mart-preview-item">
-                        <span class="mart-preview-icon"><i class="fas fa-cocktail"></i></span>
-                        <span><strong>Quick orders</strong><small>Pour. Serve. Repeat.</small></span>
-                    </div>
-                    <div class="mart-preview-item">
-                        <span class="mart-preview-icon"><i class="fas fa-receipt"></i></span>
-                        <span><strong>Open tabs</strong><small>Keep the night moving</small></span>
-                    </div>
-                    <div class="mart-preview-item">
-                        <span class="mart-preview-icon"><i class="fas fa-wine-bottle"></i></span>
-                        <span><strong>Bar inventory</strong><small>Know your stock</small></span>
-                    </div>
+                    @foreach ($pagePreset['features'] as $feature)
+                        <div class="mart-preview-item">
+                            <span class="mart-preview-icon"><i class="fas {{ $feature['icon'] }}"></i></span>
+                            <span><strong>{{ $feature['title'] }}</strong><small>{{ $feature['text'] }}</small></span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
             <div class="modern-login-footnote">
-                <a href="{{ url('/') }}">&larr; Back to the bar</a>
+                <a href="{{ url('/') }}">&larr; {{ $pagePreset['back'] }}</a>
                 @if (!empty($loginPhone) && !empty($loginPhoneHref))
                     <a href="tel:{{ $loginPhoneHref }}">
                         <i class="fas fa-phone-alt" aria-hidden="true"></i> {{ $loginPhone }}

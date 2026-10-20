@@ -1,26 +1,42 @@
-# Prak & Daughters main-domain website
+﻿# Main-domain website collection
 
-This folder is a standalone static website for `https://prakanddaughters.com`.
-It does not require Laravel, PHP, or database access.
+Three self-contained static websites are available:
 
-## Deploy with cPanel File Manager
+| Business | Folder | Local preview |
+| --- | --- | --- |
+| Pharmacy | `pharmacy/` | `http://localhost/perryposs/main-domain-site/pharmacy/` |
+| Supermarket | `supermarket/` | `http://localhost/perryposs/main-domain-site/supermarket/` |
+| Bar & Restaurant | `bar-restaurant/` | `http://localhost/perryposs/main-domain-site/bar-restaurant/` |
 
-1. Open the main domain document root, usually `public_html`.
-2. Back up any existing website files.
-3. Upload the contents of this folder—not the enclosing folder—into `public_html`.
-4. Confirm the staff portal opens at `/shop/public/login`.
-5. Enable HTTPS in cPanel and test the site on desktop and mobile.
+Open `http://localhost/perryposs/main-domain-site/templates.html` to compare them.
+The existing root `index.html` and its original assets have been preserved.
 
-## Live catalogue dependency
+## Configure a version
 
-The website loads products from `/shop/public/catalogue/products`. Upload these
-Laravel files to the POS installation before testing the catalogue:
+Edit `assets/js/site-config.js` **inside the selected folder**:
 
-- `app/Http/Controllers/PublicCatalogueController.php`
-- `routes/web.php`
-- `config/constants.php`
+- `businessName`, `phone`, `email`, `address`, `openingHours`: public business details. Empty contact fields remain hidden.
+- `posBaseUrl`: the POS installation base URL, such as `https://example.com/shop/public`. The staff links add `/login` automatically.
+- `enableCatalogue`: set to `true` to display live products, category filters, location filters, search and pagination.
+- `catalogueUrl`: your POS catalogue URL, normally `<posBaseUrl>/catalogue/products`. Leave blank to derive it from the POS base URL.
+- `currency` and `locale`: price formatting, defaulting to `GHS` and `en-GH`.
 
-The endpoint defaults to business ID `1`. If the live business uses another ID,
-add `PUBLIC_CATALOG_BUSINESS_ID=YOUR_ID` to the POS `.env` file.
+An empty POS base URL detects this project's local `/perryposs/public` installation when previewed from `main-domain-site` on localhost. On a hosted domain it defaults to `/shop/public`.
 
-Public branch information was taken from the local Prak & Daughters database on 15 August 2026. Update `index.html` when branch details change.
+These pages run without Laravel or a build step. They do **not** automatically read Business Settings; their configuration is independent of the Laravel public/login layout selector.
+
+## Live catalogue
+
+The catalogue is optional and disabled by default. When enabled it uses the existing public endpoint in `PublicCatalogueController`. The backend's `PUBLIC_CATALOG_BUSINESS_ID` selects which business is published; selecting a website theme does not change that business or filter its products. Use the correct backend for each deployed business.
+
+Keep the site and POS on the same origin, or configure allowed origins on the POS server. If the API is unavailable the page remains usable and shows a clear catalogue message. It does not display fabricated products or prices.
+
+## Deploy one version
+
+1. Back up the destination website.
+2. Configure your chosen folder and test the staff link and optional catalogue.
+3. Upload **that folder's contents**, including its `assets/`, `robots.txt` and `.htaccess`, into the domain document root (usually `public_html`). Do not upload all three versions into the same root.
+4. Enable HTTPS and test on desktop and mobile.
+5. If publishing a sitemap, generate it with the actual domain. The new variants do not embed the old Prak domain in robots or sitemap files.
+
+Local artwork and fonts require no third-party image or font services. The only optional external dependency is your configured POS catalogue.

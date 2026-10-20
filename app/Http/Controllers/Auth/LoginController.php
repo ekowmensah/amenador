@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Business;
-use App\BusinessLocation;
+use App\Utils\PublicPageLayout;
 use App\Providers\RouteServiceProvider;
 use App\Utils\BusinessUtil;
 use App\Utils\ModuleUtil;
@@ -56,22 +55,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $businessId = (int) config('constants.public_catalog_business_id', 1);
-        $business = Business::find($businessId);
-        $loginPhone = trim((string) ($business->common_settings['login_phone'] ?? ''));
-
-        if ($loginPhone === '') {
-            $location = BusinessLocation::where('business_id', $businessId)
-                ->where('is_active', 1)->whereNull('deleted_at')->orderBy('id')->first();
-            $loginPhone = trim((string) ($location->mobile ?? ''));
-            if ($loginPhone === '') {
-                $loginPhone = trim((string) ($location->alternate_number ?? ''));
-            }
-        }
-
-        $loginPhoneHref = preg_replace('/[^0-9+]/', '', $loginPhone);
-
-        return view('auth.login', compact('loginPhone', 'loginPhoneHref'));
+        return view('auth.login', app(PublicPageLayout::class)->data());
     }
 
     /**

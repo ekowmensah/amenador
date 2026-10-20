@@ -2,6 +2,13 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
+                {!! Form::label('public_layout', 'Public & login layout') !!}
+                {!! Form::select('common_settings[public_layout]', ['follow_pos' => 'Follow POS layout'] + collect(config('pos_layouts'))->map(fn ($layout) => $layout['name'])->all(), $common_settings['public_layout'] ?? 'follow_pos', ['id' => 'public_layout', 'class' => 'form-control']) !!}
+                <p class="help-block">Choose a style for the public and login pages. Follow POS keeps them matched to your POS layout. Public pages use the business assigned to this website.</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
                 {!! Form::label('login_phone', 'Login page phone number:') !!}
                 {!! Form::tel('common_settings[login_phone]', $common_settings['login_phone'] ?? null, ['class' => 'form-control', 'id' => 'login_phone', 'maxlength' => 40, 'placeholder' => 'e.g. +233 24 123 4567']); !!}
                 <p class="help-block">Shown publicly on the login page. Leave blank to use the main business location's phone number.</p>

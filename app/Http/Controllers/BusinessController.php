@@ -352,6 +352,7 @@ class BusinessController extends Controller
         }
 
         $request->validate([
+            'common_settings.public_layout' => ['nullable', 'string', 'in:follow_pos,'.implode(',', array_keys(config('public_page_layouts')))],
             'common_settings.pos_layout' => ['nullable', 'string', 'in:'.implode(',', array_keys(config('pos_layouts')))],
             'common_settings.login_phone' => ['nullable', 'string', 'max:40', 'regex:/^\+?[0-9\s().-]+$/'],
         ]);

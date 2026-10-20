@@ -77,7 +77,7 @@ include_once 'install_r.php';
 
 Route::middleware(['setData'])->group(function () {
     Route::get('/', function () {
-        return view('welcome');
+        return view('welcome', app(\App\Utils\PublicPageLayout::class)->data());
     });
 
     Route::get('/catalogue/products', [PublicCatalogueController::class, 'products'])
