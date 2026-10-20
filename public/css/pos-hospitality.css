@@ -1,0 +1,85 @@
+﻿/* Hospitality register: warm surfaces, touch targets, menu first and a clear ticket. */
+body.hospitality-pos { --pos-bg:#f2eee7; --pos-surface:#fffdf9; --pos-surface-soft:#f7f2e9; --pos-border:#e8dfd2; --pos-border-strong:#d5c4ac; --pos-text:#30291f; --pos-muted:#857763; --pos-primary:#956629; --pos-primary-dark:#634119; --pos-primary-soft:#f5e9d5; --pos-radius-lg:16px; --system-blue:#956629; --system-blue-dark:#634119; --system-blue-soft:#f5e9d5; --system-border:#e8dfd2; background:#f2eee7!important; }
+.hospitality-pos .clean-pos-toolbar { background:#241f19!important; border-color:#46392b!important; padding:8px 18px; min-height:64px; box-shadow:none; }
+.hospitality-pos .clean-pos-toolbar .clean-pos-action { color:#dfd1bc!important; border-color:#51412f!important; background:transparent!important; min-height:42px; border-radius:8px; }
+.hospitality-pos .clean-pos-toolbar .clean-pos-action:hover { background:#413324!important; color:#ffe3b3!important; }
+.hospitality-pos .clean-pos-store-icon { background:#473723!important; color:#e8ba76!important; }
+.hospitality-pos .clean-pos-location-select { background:#30271e!important; color:#f6ead6!important; border-color:#685137!important; }
+.hospitality-pos .clean-pos-register-status { color:#c2b199!important; }
+.hospitality-pos .pos-v2-shell { max-width:1920px; padding:16px 18px 150px; background:#f2eee7!important; }
+.hospitality-pos .pos-v2-workspace { grid-template-columns:minmax(0,1.35fr) minmax(380px,1fr); gap:16px; align-items:start; }
+.hospitality-pos .pos-v2-workspace--cart-only { grid-template-columns:minmax(0,1fr); }
+.hospitality-pos .pos-v2-panel { border:1px solid #e0d7ca!important; border-radius:16px; background:#fffdf9!important; box-shadow:0 5px 20px #30291f05; }
+.hospitality-pos .pos-v2-catalog-panel { order:-1; padding:20px; min-height:calc(100dvh - 225px); background:#fffdf9!important; }
+.hospitality-pos .pos-v2-cart-panel { min-height:calc(100dvh - 225px); }
+.hospitality-pos .pos-v2-cart-body { padding:14px; background:#fffdf9!important; }
+.hospitality-pos .pos-v2-cart-body>.box-body { padding:0; }
+.hospitality-pos .pos-catalog-heading { padding:0 0 16px; border-bottom:1px solid #eee5d8; margin-bottom:16px; }
+.hospitality-pos .pos-catalog-eyebrow { color:#977343; font-size:10px; letter-spacing:.15em; }
+.hospitality-pos .pos-catalog-heading h3 { color:#30291f; font-size:25px; font-weight:700; letter-spacing:-.025em; margin-top:5px; }
+.hospitality-pos .pos-catalog-ready { color:#7b735f; background:#f4f0e8; border-color:#e4d9c9; }
+.hospitality-pos .pos-catalog-collapse { color:#8c7048; border-color:#e2d5c1; background:#fffaf2; min-width:42px; min-height:42px; }
+.hospitality-search-slot { margin-bottom:14px; }
+.hospitality-search-slot>.form-group { margin:0; }
+.hospitality-pos .hospitality-search-slot .form-control { height:48px!important; background:#f5f1e9!important; border-color:#e2d7c6!important; font-size:14px; }
+.hospitality-pos .hospitality-search-slot .btn { height:48px!important; border-color:#e2d7c6!important; background:#f5f1e9!important; }
+.hospitality-categories { display:flex; gap:8px; overflow-x:auto; padding:0 0 12px; scrollbar-width:thin; scrollbar-color:#cdbb9e transparent; }
+.hospitality-category { display:inline-flex; align-items:center; justify-content:center; gap:8px; flex-shrink:0; min-height:46px; padding:0 18px; border:1px solid #e6dccd; border-radius:10px; background:#fffdf9; color:#73634e; font-size:13px; font-weight:600; }
+.hospitality-category:hover { background:#f7eddd; border-color:#cbae81; }
+.hospitality-category.is-active { background:#30271e; color:#f8dfb5; border-color:#30271e; }
+.hospitality-pos .pos-stock-filter { background:transparent!important; border:0!important; padding:0 0 10px; margin-bottom:0; gap:5px; }
+.hospitality-pos .pos-stock-filter button { font-size:11px; min-height:32px; color:#8a7a62; border-radius:6px; }
+.hospitality-pos .pos-stock-filter button.is-active { background:#f4e8d4!important; color:#7d5727!important; border-color:#ddc69f!important; }
+.hospitality-pos .pos-v2-catalog-panel #product_list_body { height:calc(100dvh - 420px)!important; min-height:260px; background:transparent; border:0; padding:0; gap:12px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-content:start; }
+.hospitality-pos .pos-v2-catalog-panel .product_list { padding:0; width:auto!important; float:none; }
+.hospitality-pos .pos-v2-catalog-panel .pos-modern-product { height:190px; border:1px solid #e5dac9!important; border-radius:12px!important; box-shadow:none!important; background:#fffdf9; }
+.hospitality-pos .pos-v2-catalog-panel .pos-modern-product:hover { border-color:#ad8245!important; box-shadow:0 5px 15px #80581b16!important; transform:translateY(-2px); }
+.hospitality-pos .pos-v2-catalog-panel .pos-modern-product .image-container { min-height:108px; background-color:#f4efe5; border-color:#e8dfd2; background-size:cover!important; }
+.hospitality-pos .pos-product-copy { min-height:80px; padding:10px 12px!important; gap:8px; }
+.hospitality-pos .pos-product-name { color:#332a1f; font-size:14px; font-weight:600; line-height:1.3; white-space:normal; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.hospitality-pos .pos-product-price { color:#805a29!important; font-size:15px; }
+.hospitality-pos .pos-product-sku { display:none; }
+.hospitality-pos .pos-product-meta::after { content:'+'; display:grid; place-items:center; width:24px; height:24px; background:#f1e4ce; color:#805a29; border-radius:7px; font-size:18px; }
+.hospitality-pos .pos-product-stock { font-size:9px; background:#fffaf0!important; border-color:#e3d4bb!important; color:#806748!important; }
+.hospitality-pos .pos-product-stock.is-empty { background:#fff0ec!important; color:#b75238!important; border-color:#efc9bf!important; }
+.hospitality-pos .pos-product-empty { grid-column:1/-1; color:#857763; }
+.hospitality-pos .pos-product-empty i,.hospitality-pos .pos-product-empty h4 { color:#956629; }
+.hospitality-pos .pos-catalog-footer { font-size:10px; padding-bottom:0; color:#8e7a60; }
+.hospitality-ticket-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 20px; border-bottom:1px solid #e8dfd2; background:#f8f2e8; }
+.hospitality-ticket-heading>div>span { font-size:9px; letter-spacing:.16em; color:#987444; font-weight:700; }
+.hospitality-ticket-heading h2 { margin:5px 0 0; font-size:23px; color:#30291f; font-weight:700; }
+.hospitality-item-count { padding:7px 10px; border-radius:20px; background:#ede0ca; color:#826239; font-size:11px; white-space:nowrap; }
+.hospitality-pos .pos-v2-cart-body .hospitality-customer-column { width:100%; }
+.hospitality-pos .pos-v2-cart-body .form-control,.hospitality-pos .pos-v2-cart-body .select2-selection { border-color:#dfd3c0!important; background:#fffdf9!important; }
+.hospitality-pos #pos_table { border:0!important; }
+.hospitality-pos #pos_table thead th { background:#f7f1e8!important; color:#897353!important; border-color:#eee3d3!important; font-size:10px; letter-spacing:.02em; }
+.hospitality-pos #pos_table tbody tr { background:#fffdf9!important; }
+.hospitality-pos #pos_table tbody td { border-color:#eee4d6!important; }
+.hospitality-pos .pos-cart-product-name { color:#3f3223!important; font-size:13px!important; }
+.hospitality-pos .pos-cart-line-number { background:#f2e7d5; color:#8e6c3d; }
+.hospitality-pos .pos-cart-empty-state { border:1px dashed #ddc8a8; background:#fcf8f0; border-radius:12px; margin:15px 0; min-height:170px; }
+.hospitality-pos .pos-cart-empty-state>span { background:#f1e4cd; color:#9a733e; }
+.hospitality-pos .pos-cart-empty-state strong { color:#6f512b; }
+.hospitality-pos .pos-cart-empty-state small { color:#8f7f68; }
+.hospitality-pos .pos-v2-action-bar { border-top:1px solid #ded0ba!important; background:#fffcf6!important; padding:10px 18px; box-shadow:0 -6px 25px #3f2b130b!important; }
+.hospitality-pos .pos-v2-action-inner { max-width:1884px; gap:14px; }
+.hospitality-pos .pos-v2-action-button { min-height:46px; border-radius:9px; font-size:12px; }
+.hospitality-pos .pos-v2-action-button--quiet { background:#f5eee3!important; color:#7b603c!important; border:1px solid #e4d6c1!important; }
+.hospitality-pos .pos-v2-action-button--checkout { background:#30271e!important; color:#fbe3ba!important; border:1px solid #30271e!important; box-shadow:none!important; }
+.hospitality-pos .pos-v2-action-button--cash { background:#8c642d!important; color:#fff5e5!important; box-shadow:none!important; }
+.hospitality-pos .pos-v2-action-summary { background:#f5ecdd!important; border-color:#e5d3b6!important; }
+.hospitality-pos .pos-v2-action-total { color:#67461f!important; font-size:27px; }
+.hospitality-pos .pos-v2-action-summary-label { color:#8e7048; }
+.hospitality-pos button:focus-visible,.hospitality-pos .product_box:focus-visible { outline:3px solid #b38443; outline-offset:2px; }
+@media(min-width:1550px){.hospitality-pos .pos-v2-catalog-panel #product_list_body{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1100px){.hospitality-pos .pos-v2-workspace{grid-template-columns:minmax(0,1fr) minmax(360px,1fr);gap:12px}.hospitality-pos .pos-v2-catalog-panel{padding:14px}.hospitality-pos .pos-v2-catalog-panel #product_list_body{grid-template-columns:repeat(2,minmax(0,1fr))}.hospitality-pos .clean-pos-register-status{display:none}.hospitality-pos .clean-pos-action>span{font-size:10px}.hospitality-pos .pos-v2-shell{padding-inline:12px}}
+@media(max-width:850px){.hospitality-pos .pos-v2-workspace{grid-template-columns:minmax(0,1fr)}.hospitality-pos .pos-v2-catalog-panel,.hospitality-pos .pos-v2-cart-panel{min-height:0}.hospitality-pos .pos-v2-catalog-panel #product_list_body{height:350px!important;min-height:220px;grid-template-columns:repeat(3,minmax(0,1fr))}.hospitality-pos .pos-v2-shell{padding-bottom:210px}.hospitality-pos .clean-pos-toolbar{padding:8px}.hospitality-pos .pos-v2-action-bar{padding:8px}}
+@media(max-width:500px){.hospitality-pos .pos-v2-catalog-panel #product_list_body{grid-template-columns:repeat(2,minmax(0,1fr))}.hospitality-pos .pos-v2-cart-body{padding:10px}.hospitality-pos .pos-v2-shell{padding-inline:8px}.hospitality-ticket-heading{padding:16px}.hospitality-pos .clean-pos-toolbar .clean-pos-action{min-width:40px}.hospitality-pos .clean-pos-action>span{display:none}}
+/* Override legacy fixed catalogue heights and checkout gradients. */
+.hospitality-pos .pos-catalog-controls.is-collapsed + .pos-catalog-results #product_list_body { height:calc(100dvh - 420px)!important; min-height:260px!important; }
+.hospitality-pos .pos-v2-shell .pos-form-actions #pos-finalize { background:#30271e!important; border-color:#30271e!important; color:#fbe3ba!important; box-shadow:none!important; }
+.hospitality-pos .clean-pos-toolbar .clean-pos-action i { color:#d8b27a!important; }
+.hospitality-pos .pos-v2-cart-body .pos_product_div { border-color:#e4d5bd!important; background:#fffdf9!important; }
+.hospitality-pos .pos-v2-cart-body .pos-v2-summary-strip { background:#f8f1e5!important; border-color:#e7d8c0!important; }
+.hospitality-pos .pos-v2-cart-body .pos-v2-summary-strip span { color:#896b43!important; }
+@media(max-width:850px){.hospitality-pos .pos-catalog-controls.is-collapsed + .pos-catalog-results #product_list_body{height:350px!important;min-height:220px!important}}

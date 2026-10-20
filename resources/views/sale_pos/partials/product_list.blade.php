@@ -19,8 +19,8 @@
 			data-enable_stock="{{$product->enable_stock}}"
 			data-unit="{{$product->unit}}"
 			title="{{$product->name}} @if($product->type == 'variable')- {{$product->variation}} @endif {{ '(' . $product->sub_sku . ')'}} @if(!empty($show_prices)) @lang('lang_v1.default') - @format_currency($product->selling_price) @foreach($product->group_prices as $group_price) @if(array_key_exists($group_price->price_group_id, $allowed_group_prices)) {{$allowed_group_prices[$group_price->price_group_id]}} - @format_currency($group_price->price_inc_tax) @endif @endforeach @endif">
-		<span class="pos-product-stock @if($product->qty_available <= 0) is-empty @elseif($product->enable_stock && $product->qty_available <= ($product->alert_quantity ?? 5)) is-low @endif">
-			@if($product->qty_available > 0) {{ number_format($product->qty_available, 2) }} in stock @else Out of stock @endif
+		<span class="pos-product-stock @if($product->enable_stock && $product->qty_available <= 0) is-empty @elseif($product->enable_stock && $product->qty_available <= ($product->alert_quantity ?? 5)) is-low @endif">
+			@if(!$product->enable_stock) Available @elseif($product->qty_available > 0) {{ number_format($product->qty_available, 2) }} in stock @else Out of stock @endif
 		</span>
 
 		<div class="image-container" 

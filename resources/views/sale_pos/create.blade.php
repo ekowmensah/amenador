@@ -32,6 +32,10 @@
 
         <div class="pos-v2-workspace @if (!$show_product_browser || isMobile()) pos-v2-workspace--cart-only @endif">
             <section class="pos-v2-panel pos-v2-cart-panel" aria-label="Current sale">
+                <header class="hospitality-ticket-heading">
+                    <div><span>CURRENT TAB</span><h2>Order details</h2></div>
+                    <span class="hospitality-item-count" aria-live="polite">0 items</span>
+                </header>
                 <div class="pos-v2-cart-body">
                     <div class="box-body pb-0">
                         {!! Form::hidden('location_id', $default_location->id ?? null, [
@@ -102,6 +106,7 @@
 @section('javascript')
     <script src="{{ asset('js/pos.js?v=' . filemtime(public_path('js/pos.js'))) }}"></script>
     <script src="{{ asset('js/customer-display-pos.js?v=' . filemtime(public_path('js/customer-display-pos.js'))) }}"></script>
+    <script src="{{ asset('js/pos-hospitality.js?v=' . filemtime(public_path('js/pos-hospitality.js'))) }}"></script>
     <script src="{{ asset('js/printer.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/product.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/opening_stock.js?v=' . $asset_v) }}"></script>

@@ -45,10 +45,13 @@
     @yield('css')
 
     <link rel="stylesheet" href="{{ asset('css/system-theme.css?v=' . filemtime(public_path('css/system-theme.css'))) }}">
+    @if (request()->is('pos/create'))
+        <link rel="stylesheet" href="{{ asset('css/pos-hospitality.css?v=' . filemtime(public_path('css/pos-hospitality.css'))) }}">
+    @endif
 
 </head>
 <body
-    class="tw-font-sans tw-antialiased tw-text-gray-900 tw-bg-gray-100 @if ($pos_layout) hold-transition lockscreen @else hold-transition skin-@if (!empty(session('business.theme_color'))){{ session('business.theme_color') }}@else{{ 'blue-light' }} @endif sidebar-mini @endif" >
+    class="tw-font-sans tw-antialiased tw-text-gray-900 tw-bg-gray-100 @if (request()->is('pos/create')) hospitality-pos @endif @if ($pos_layout) hold-transition lockscreen @else hold-transition skin-@if (!empty(session('business.theme_color'))){{ session('business.theme_color') }}@else{{ 'blue-light' }} @endif sidebar-mini @endif" >
     <div class="tw-flex">
         <script type="text/javascript">
             if (localStorage.getItem("upos_sidebar_collapse") == 'true') {
