@@ -45,6 +45,9 @@
                 data-url="{{ route('pos.customer-display') }}" title="Open customer display" aria-label="Open customer display">
                 <i class="fas fa-desktop" aria-hidden="true"></i><span>Customer display</span>
             </button>
+            <button type="button" class="clean-pos-action" data-toggle="modal" data-target="#display-companion-modal" title="Desktop customer display" aria-label="Desktop customer display">
+                <i class="fas fa-link" aria-hidden="true"></i><span>Display app</span>
+            </button>
         @endif
         <button type="button" class="clean-pos-action hover-q" title="Keyboard shortcuts"
             aria-label="Keyboard shortcuts" data-container="body" data-toggle="popover"

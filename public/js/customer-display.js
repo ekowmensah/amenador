@@ -23,7 +23,9 @@
             return;
         }
         if (event.data.type !== 'pos-customer-order') return;
-        var order = event.data.order;
+        renderOrder(event.data.order);
+    });
+    function renderOrder(order) {
         if (!order || !Array.isArray(order.items)) return;
         lastUpdate = Date.now();
         byId('connection-status').textContent = 'Connected to register';
@@ -47,7 +49,7 @@
         ['subtotal', 'total', 'discount', 'tax', 'adjustments'].forEach(function (key) { byId('order-' + key).textContent = order[key]; });
         ['discount', 'tax', 'adjustments'].forEach(function (key) { byId(key + '-row').hidden = !order['has_' + key]; });
         byId('order-items').scrollTop = byId('order-items').scrollHeight;
-    });
+    }
     async function enterFullscreen(interactive) {
         if (document.fullscreenElement || !document.documentElement.requestFullscreen) return;
         if (fullscreenAttempted && !interactive) return;
@@ -79,6 +81,19 @@
         if (window.opener) window.opener.postMessage({type: 'pos-customer-ready', configured: configured}, window.location.origin);
         if (lastUpdate && Date.now() - lastUpdate > 5000) { clear(); lastUpdate = 0; }
     }
-    requestOrder();
-    window.setInterval(requestOrder, 1000);
+    if (window.amenadorDisplay) {
+        byId('display-fullscreen').hidden = true;
+        window.amenadorDisplay.onState(function (state) {
+            if (!state.connected || !state.order) {
+                clear();
+                byId('connection-status').textContent = state.connected ? 'Waiting for register' : 'Disconnected — waiting to reconnect';
+                return;
+            }
+            renderOrder(state.order);
+        });
+        window.amenadorDisplay.ready();
+    } else {
+        requestOrder();
+        window.setInterval(requestOrder, 1000);
+    }
 })();

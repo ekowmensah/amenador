@@ -1,0 +1,51 @@
+{
+  "name": "amenador-customer-display",
+  "version": "1.0.1",
+  "description": "Dedicated dual-monitor customer display for AdomGrace Legacy POS",
+  "author": "AdomGrace Legacy",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "test:desktop": "node test/electron.smoke.cjs",
+    "dist": "electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.9.1",
+    "electron-builder": "26.15.3",
+    "playwright-core": "1.60.0"
+  },
+  "build": {
+    "appId": "com.amenador.customerdisplay",
+    "productName": "AdomGrace Legacy POS Customer Display",
+    "artifactName": "AdomGrace-Legacy-POS-Customer-Display-Setup-${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.cjs",
+      "lib.cjs",
+      "preload.cjs",
+      "display-preload.cjs",
+      "setup.html",
+      "setup.css",
+      "setup.js",
+      "icon.png"
+    ],
+    "win": {
+      "target": "nsis",
+      "signExecutable": false,
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico"
+    },
+    "publish": null
+  }
+}

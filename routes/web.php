@@ -118,6 +118,12 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/pos/customer-display', [SellPosController::class, 'customerDisplay'])->name('pos.customer-display');
+    Route::prefix('pos/display-companion')->name('pos.display-companion.')->group(function () {
+        Route::post('status', [\App\Http\Controllers\CustomerDisplayCompanionController::class, 'status'])->name('status');
+        Route::post('code', [\App\Http\Controllers\CustomerDisplayCompanionController::class, 'code'])->middleware('throttle:10,1')->name('code');
+        Route::post('publish', [\App\Http\Controllers\CustomerDisplayCompanionController::class, 'publish'])->name('publish');
+        Route::post('revoke', [\App\Http\Controllers\CustomerDisplayCompanionController::class, 'revoke'])->name('revoke');
+    });
     Route::get('/home/get-totals', [HomeController::class, 'getTotals']);
     Route::get('/home/admin-analytics', [HomeController::class, 'getAdminAnalytics']);
     Route::get('/home/product-stock-alert', [HomeController::class, 'getProductStockAlert']);

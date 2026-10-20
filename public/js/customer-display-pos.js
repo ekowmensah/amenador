@@ -5,6 +5,14 @@
         if (!button) return;
         var autoOpenSetting = document.getElementById('customer-display-auto-open');
         var autoOpen = !autoOpenSetting || autoOpenSetting.value === '1';
+        var companionEnabled = false;
+        var desktopAutomatic = false;
+        try { desktopAutomatic = localStorage.getItem('amenador-display-mode') === 'desktop'; } catch (error) { /* Browser storage may be unavailable. */ }
+        document.addEventListener('pos-companion-enabled', function (event) { companionEnabled = !!event.detail; send(); });
+        document.addEventListener('pos-companion-mode', function (event) {
+            desktopAutomatic = !!event.detail;
+            if (desktopAutomatic && display && !display.closed) display.close();
+        });
         var display = null;
         var screenDetails = null;
         var shuttingDown = false;
@@ -64,7 +72,7 @@
         }
         function money(value) { return __currency_trans_from_en(value, true); }
         function send() {
-            if (!display || display.closed) return;
+            if ((!display || display.closed) && !companionEnabled) return;
             var items = [];
             $('#pos_table tbody tr.product_row').each(function () {
                 var row = $(this);
@@ -77,7 +85,7 @@
                 });
             });
             var location = $('#select_location_id option:selected').text().trim() || $('.clean-pos-location-name').text().trim();
-            display.postMessage({type: 'pos-customer-order', order: {
+            var order = {
                 items: items, location: location,
                 subtotal: money(number('.price_total')),
                 discount: money(number('#total_discount')),
@@ -87,7 +95,9 @@
                 has_adjustments: items.length > 0 && Math.abs(number('#final_total_input') - number('.price_total') + number('#total_discount') - number('#order_tax')) > 0.005,
                 total: items.length ? money(number('#final_total_input')) : money(0),
                 adjustments: money(items.length ? number('#final_total_input') - number('.price_total') + number('#total_discount') - number('#order_tax') : 0)
-            }}, window.location.origin);
+            };
+            if (display && !display.closed) display.postMessage({type: 'pos-customer-order', order: order}, window.location.origin);
+            if (companionEnabled) document.dispatchEvent(new CustomEvent('pos-customer-snapshot', {detail: order}));
         }
         button.addEventListener('click', function () {
             openDisplay(true);
@@ -109,10 +119,10 @@
         window.addEventListener('pageshow', function (event) {
             if (event.persisted) {
                 shuttingDown = false;
-                if (autoOpen) { openDisplay(false); detectScreens(false); }
+                if (autoOpen && !desktopAutomatic) { openDisplay(false); detectScreens(false); }
             }
         });
-        if (autoOpen) {
+        if (autoOpen && !desktopAutomatic) {
             openDisplay(false);
             detectScreens(false);
         }

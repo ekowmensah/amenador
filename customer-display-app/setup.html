@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>AdomGrace Legacy POS Customer Display</title><link rel="stylesheet" href="setup.css"></head>
+<body><main>
+<div class="mark">AG</div><p class="eyebrow">ADOMGRACE LEGACY POS · CUSTOMER DISPLAY</p><h1>A screen for your customers.</h1>
+<p class="intro">Connect this computer to a POS register. Your customer screen opens on the second monitor.</p>
+<p id="status" role="status">Starting…</p>
+<form id="pair-form">
+<label for="server">POS server address</label><input id="server" type="url" placeholder="https://your-pos.example.com" required>
+<label for="name">Display name</label><input id="name" maxlength="80" value="Customer screen" required>
+<label for="code">Pairing code</label><input id="code" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" placeholder="12345678" autocomplete="off" required>
+<p class="hint">In POS, select <strong>Display app → Generate pairing code</strong>.</p>
+<button type="submit" id="pair">Connect register</button></form>
+<section id="paired" hidden><p id="paired-server"></p><button type="button" class="secondary" id="unpair">Forget register on this computer</button></section>
+<section class="preferences"><label for="monitor">Customer monitor</label><select id="monitor"><option value="auto">Automatically use second monitor</option></select>
+<label class="check"><input type="checkbox" id="allow-primary"> Allow the primary monitor (for single-screen testing)</label>
+<label class="check"><input type="checkbox" id="startup"> Start quietly when I sign in to Windows</label>
+<div class="actions"><button type="button" id="save">Save preferences</button><button type="button" class="secondary" id="preview">Preview · 20 seconds</button></div></section>
+<p class="hint">Closing this window keeps the app running in the system tray. Use the tray icon to open settings or quit.</p>
+<p id="error" role="alert"></p>
+</main><script src="setup.js"></script></body></html>

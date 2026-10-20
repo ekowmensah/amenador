@@ -98,6 +98,7 @@
     @include('sale_pos.partials.configure_search_modal')
     @include('sale_pos.partials.recent_transactions_modal')
     @include('sale_pos.partials.weighing_scale_modal')
+    @include('sale_pos.partials.display_companion_modal')
 @stop
 
 @section('css')
@@ -113,6 +114,7 @@
 @section('javascript')
     <script src="{{ asset('js/pos.js?v=' . filemtime(public_path('js/pos.js'))) }}"></script>
     <script src="{{ asset('js/customer-display-pos.js?v=' . filemtime(public_path('js/customer-display-pos.js'))) }}"></script>
+    <script src="{{ asset('js/customer-display-companion-pos.js?v=' . filemtime(public_path('js/customer-display-companion-pos.js'))) }}"></script>
     <script src="{{ asset('js/pos-hospitality.js?v=' . filemtime(public_path('js/pos-hospitality.js'))) }}"></script>
     <script src="{{ asset('js/printer.js?v=' . $asset_v) }}"></script>
     <script src="{{ asset('js/product.js?v=' . $asset_v) }}"></script>
