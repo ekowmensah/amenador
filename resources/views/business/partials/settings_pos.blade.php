@@ -4,7 +4,7 @@
             <div class="form-group">
                 {!! Form::label('pos_layout', 'POS layout') !!}
                 {!! Form::select('common_settings[pos_layout]', collect(config('pos_layouts'))->map(fn ($layout) => $layout['name'])->all(), $common_settings['pos_layout'] ?? 'restaurant', ['id' => 'pos_layout', 'class' => 'form-control']) !!}
-                <p class="help-block">Choose the layout for this business. Save, then reopen POS to apply it. Product data, stock rules and payments stay the same.</p>
+                <p class="help-block">Choose General Goods / Mixed Business for a store with several departments, or a specialist layout. Every layout can sell any product category. Save, then reopen POS to apply it. Product data, stock rules and payments stay the same.</p>
             </div>
         </div>
     </div>

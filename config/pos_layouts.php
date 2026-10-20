@@ -1,6 +1,38 @@
 <?php
 
 return [
+    'general' => [
+        'name' => 'General Goods / Mixed Business', 'eyebrow' => 'SALES COUNTER',
+        'catalogue' => 'Products & departments', 'all' => 'All products', 'icon' => 'fa-store',
+        'ticket' => 'CURRENT SALE', 'heading' => 'Customer order',
+        'search' => 'Search any product, SKU or scan a barcode...',
+        'empty' => 'Ready for your next sale', 'hint' => 'Scan or select any item from your catalogue to begin.',
+        'display' => [
+            'theme' => '#263c5a', 'context' => 'WELCOME TO OUR STORE', 'eyebrow' => 'SOMETHING FOR YOUR EVERYDAY',
+            'headline' => 'More choice.', 'highlight' => 'One welcome.', 'intro' => 'Your everyday shopping, all in one place.',
+            'image' => 'general-goods-display.svg', 'alt' => 'A shopping bag and assorted product boxes',
+            'note' => 'THANK YOU FOR CHOOSING US', 'thanks' => 'We are glad to be part of your day.',
+            'order_eyebrow' => 'YOUR ITEMS AT A GLANCE', 'order' => 'Your purchase',
+            'empty' => 'Welcome. Ready when you are.', 'hint' => 'Your items will appear here as they are added.',
+            'check' => 'Please check your items before payment.', 'footer' => 'Your purchase, clearly displayed.', 'closing' => 'Thank you for shopping with us.',
+        ],
+    ],
+    'hardware' => [
+        'name' => 'Hardware & Building Supplies', 'eyebrow' => 'TRADE COUNTER',
+        'catalogue' => 'Tools, materials & supplies', 'all' => 'All departments', 'icon' => 'fa-tools',
+        'ticket' => 'CURRENT ORDER', 'heading' => 'Order details',
+        'search' => 'Search tools, materials, SKU or scan a barcode...',
+        'empty' => 'Start your next order', 'hint' => 'Choose a product or scan its barcode to add it to the order.',
+        'display' => [
+            'theme' => '#3e352c', 'context' => 'HARDWARE & SUPPLIES', 'eyebrow' => 'FOR THE JOB AHEAD',
+            'headline' => 'Every project.', 'highlight' => 'A good start.', 'intro' => 'Tools, materials and everyday project essentials.',
+            'image' => 'hardware-display.svg', 'alt' => 'A toolbox, hammer and ruler',
+            'note' => 'THANK YOU FOR CHOOSING US', 'thanks' => 'We look forward to seeing what you build next.',
+            'order_eyebrow' => 'CHECK YOUR ORDER', 'order' => 'Your order',
+            'empty' => 'Ready for your next project.', 'hint' => 'Your products and quantities will appear here.',
+            'check' => 'Please check quantities and units before payment.', 'footer' => 'Products, quantities and prices in view.', 'closing' => 'Thank you. See you again soon.',
+        ],
+    ],
     'restaurant' => [
         'name' => 'Bar & Restaurant', 'eyebrow' => 'BAR & RESTAURANT',
         'catalogue' => 'On the menu', 'all' => 'Full menu', 'icon' => 'fa-utensils',

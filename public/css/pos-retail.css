@@ -1,52 +1,52 @@
-﻿/* Retail presets share the existing POS controls and calculations. */
+/* Retail presets share the existing POS controls and calculations. */
 body.pos-layout-pharmacy { --retail-accent:#147c83; --retail-dark:#164e57; --retail-soft:#e9f5f5; --retail-bg:#eff5f5; --retail-border:#cee3e4; --retail-text:#21454b; }
 body.pos-layout-supermarket { --retail-accent:#2b774b; --retail-dark:#205237; --retail-soft:#eaf5e9; --retail-bg:#f0f5ee; --retail-border:#d1e1cb; --retail-text:#294b35; }
 body.pos-layout-pharmacy, body.pos-layout-supermarket { --pos-primary:var(--retail-accent); --pos-primary-dark:var(--retail-dark); --pos-primary-soft:var(--retail-soft); --system-blue:var(--retail-accent); --system-blue-dark:var(--retail-dark); --system-blue-soft:var(--retail-soft); background:var(--retail-bg)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-shell { background:var(--retail-bg)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-toolbar { background:var(--retail-dark)!important; border-color:var(--retail-dark)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-toolbar .clean-pos-action { color:#edf9f5!important; border-color:#ffffff30!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-toolbar .clean-pos-action:hover { background:#ffffff20!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-toolbar .clean-pos-action i { color:#c6e8da!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-register-status { color:#e0eee6!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-store-icon { background:#ffffff20!important; color:#fff!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .clean-pos-location-select { background:var(--retail-dark)!important; color:#fff!important; border-color:#ffffff50!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-panel { background:#fff!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-cart-body { background:#fff!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-catalog-panel { background:#fff!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-ticket-heading { background:var(--retail-soft); border-color:var(--retail-border); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-ticket-heading h2,
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-catalog-heading h3 { color:var(--retail-text); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-ticket-heading>div>span,
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-catalog-eyebrow { color:var(--retail-accent); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-item-count { background:#fff; color:var(--retail-accent); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-catalog-heading { border-color:var(--retail-border); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-category { border-color:var(--retail-border); background:#fff; color:var(--retail-text); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-category.is-active { background:var(--retail-accent); color:#fff; border-color:var(--retail-accent); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-category:hover { border-color:var(--retail-accent); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-search-slot .form-control,
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .hospitality-search-slot .btn { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-price { color:var(--retail-accent)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-meta::after { color:var(--retail-accent); background:var(--retail-soft); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-sku { display:block; color:#6e8580; font-size:10px; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-meta { flex-wrap:wrap; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-meta::after { display:none; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-catalog-panel .pos-modern-product { border-color:var(--retail-border)!important; background:#fff; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-catalog-panel .pos-modern-product:hover { border-color:var(--retail-accent)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-stock-filter button.is-active { color:var(--retail-accent)!important; background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-product-stock:not(.is-empty) { color:var(--retail-accent)!important; background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-cart-body .pos_product_div,
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) #pos_table tbody td { background:#fff!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) #pos_table thead th { background:var(--retail-soft)!important; color:var(--retail-text)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-cart-body .pos-v2-summary-strip { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-action-bar { background:#fff!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-action-summary { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-action-total,
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-action-summary-label { color:var(--retail-accent)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-action-button--quiet { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; color:var(--retail-text)!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-v2-shell .pos-form-actions #pos-finalize { background:var(--retail-accent)!important; border-color:var(--retail-accent)!important; color:#fff!important; }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-cart-empty-state { background:var(--retail-soft); border-color:var(--retail-border); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-cart-empty-state strong { color:var(--retail-text); }
-:is(.pos-layout-pharmacy,.pos-layout-supermarket) .pos-cart-empty-state>span { background:#fff; color:var(--retail-accent); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-shell { background:var(--retail-bg)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-toolbar { background:var(--retail-dark)!important; border-color:var(--retail-dark)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-toolbar .clean-pos-action { color:#edf9f5!important; border-color:#ffffff30!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-toolbar .clean-pos-action:hover { background:#ffffff20!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-toolbar .clean-pos-action i { color:#c6e8da!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-register-status { color:#e0eee6!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-store-icon { background:#ffffff20!important; color:#fff!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .clean-pos-location-select { background:var(--retail-dark)!important; color:#fff!important; border-color:#ffffff50!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-panel { background:#fff!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-cart-body { background:#fff!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel { background:#fff!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-ticket-heading { background:var(--retail-soft); border-color:var(--retail-border); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-ticket-heading h2,
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-catalog-heading h3 { color:var(--retail-text); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-ticket-heading>div>span,
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-catalog-eyebrow { color:var(--retail-accent); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-item-count { background:#fff; color:var(--retail-accent); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-catalog-heading { border-color:var(--retail-border); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-category { border-color:var(--retail-border); background:#fff; color:var(--retail-text); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-category.is-active { background:var(--retail-accent); color:#fff; border-color:var(--retail-accent); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-category:hover { border-color:var(--retail-accent); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-search-slot .form-control,
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .hospitality-search-slot .btn { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-price { color:var(--retail-accent)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-meta::after { color:var(--retail-accent); background:var(--retail-soft); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-sku { display:block; color:#6e8580; font-size:10px; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-meta { flex-wrap:wrap; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-meta::after { display:none; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel .pos-modern-product { border-color:var(--retail-border)!important; background:#fff; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel .pos-modern-product:hover { border-color:var(--retail-accent)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-stock-filter button.is-active { color:var(--retail-accent)!important; background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-product-stock:not(.is-empty) { color:var(--retail-accent)!important; background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-cart-body .pos_product_div,
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) #pos_table tbody td { background:#fff!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) #pos_table thead th { background:var(--retail-soft)!important; color:var(--retail-text)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-cart-body .pos-v2-summary-strip { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-action-bar { background:#fff!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-action-summary { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-action-total,
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-action-summary-label { color:var(--retail-accent)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-action-button--quiet { background:var(--retail-soft)!important; border-color:var(--retail-border)!important; color:var(--retail-text)!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-v2-shell .pos-form-actions #pos-finalize { background:var(--retail-accent)!important; border-color:var(--retail-accent)!important; color:#fff!important; }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-cart-empty-state { background:var(--retail-soft); border-color:var(--retail-border); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-cart-empty-state strong { color:var(--retail-text); }
+:is(.pos-layout-pharmacy,.pos-layout-supermarket,.pos-layout-general,.pos-layout-hardware) .pos-cart-empty-state>span { background:#fff; color:var(--retail-accent); }
 .pos-layout-pharmacy .pos-v2-workspace { grid-template-columns:minmax(380px,1.2fr) minmax(0,1fr); }
 .pos-layout-pharmacy .pos-v2-catalog-panel { order:1; }
 .pos-layout-pharmacy .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -59,3 +59,15 @@ body.pos-layout-pharmacy, body.pos-layout-supermarket { --pos-primary:var(--reta
 .pos-layout-supermarket .pos-v2-catalog-panel .pos-modern-product { height:205px; }
 .pos-layout-supermarket .pos-v2-catalog-panel .pos-product-copy { min-height:95px; }
 @media(max-width:850px){.pos-layout-pharmacy .pos-v2-workspace{grid-template-columns:minmax(0,1fr)}.pos-layout-pharmacy .pos-v2-catalog-panel{order:-1}}
+/* General and trade-counter presets work with every department in the catalogue. */
+body.pos-layout-general { --retail-accent:#3c6599; --retail-dark:#263c5a; --retail-soft:#eaf0f9; --retail-bg:#f2f5fa; --retail-border:#d3dfef; --retail-text:#273f60; }
+body.pos-layout-hardware { --retail-accent:#a65e23; --retail-dark:#3e352c; --retail-soft:#f7eddf; --retail-bg:#f5f2ed; --retail-border:#e6d5bc; --retail-text:#57412b; }
+body.pos-layout-general, body.pos-layout-hardware { --pos-primary:var(--retail-accent); --pos-primary-dark:var(--retail-dark); --pos-primary-soft:var(--retail-soft); --system-blue:var(--retail-accent); --system-blue-dark:var(--retail-dark); --system-blue-soft:var(--retail-soft); background:var(--retail-bg)!important; }
+:is(.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel .pos-modern-product .image-container { background-size:contain!important; background-color:var(--retail-soft); }
+:is(.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel .pos-modern-product { height:205px; }
+:is(.pos-layout-general,.pos-layout-hardware) .pos-v2-catalog-panel .pos-product-copy { min-height:95px; }
+.pos-layout-hardware .pos-v2-workspace { grid-template-columns:minmax(380px,1.1fr) minmax(0,1fr); }
+.pos-layout-hardware .pos-v2-catalog-panel { order:1; }
+.pos-layout-hardware .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.pos-layout-hardware .pos-v2-workspace--cart-only { grid-template-columns:minmax(0,1fr); }
+@media(max-width:850px){.pos-layout-hardware .pos-v2-workspace{grid-template-columns:minmax(0,1fr)}.pos-layout-hardware .pos-v2-catalog-panel{order:-1}}

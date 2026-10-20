@@ -11,7 +11,7 @@ class PublicPageLayoutTest extends TestCase
     public function test_public_layout_follows_pos_by_default_and_accepts_an_override(): void
     {
         $resolver = new PublicPageLayout;
-        foreach (['restaurant', 'pharmacy', 'supermarket'] as $layout) {
+        foreach (array_keys(config('pos_layouts')) as $layout) {
             $this->assertSame($layout, $resolver->resolve(['pos_layout' => $layout]));
             $this->assertSame($layout, $resolver->resolve(['pos_layout' => $layout, 'public_layout' => 'follow_pos']));
             $this->assertSame($layout, $resolver->resolve(['pos_layout' => 'restaurant', 'public_layout' => $layout]));
@@ -25,7 +25,7 @@ class PublicPageLayoutTest extends TestCase
     {
         view()->share('asset_v', 'test');
         view()->share('errors', new ViewErrorBag);
-        foreach (['restaurant', 'pharmacy', 'supermarket'] as $layout) {
+        foreach (array_keys(config('pos_layouts')) as $layout) {
             $preset = config('public_page_layouts.'.$layout);
             $data = [
                 'pageLayout' => $layout, 'pagePreset' => $preset,
@@ -45,5 +45,17 @@ class PublicPageLayoutTest extends TestCase
                 $this->assertStringContainsString($control, $login);
             }
         }
+    }
+
+    public function test_all_business_layouts_have_matching_public_and_customer_display_artwork(): void
+    {
+        $this->assertSame(array_keys(config('pos_layouts')), array_keys(config('public_page_layouts')));
+        foreach (config('pos_layouts') as $key => $preset) {
+            $this->assertNotEmpty($preset['display']['order']);
+            $this->assertFileExists(public_path('img/'.$preset['display']['image']));
+            $this->assertFileExists(public_path('img/'.config('public_page_layouts.'.$key.'.image')));
+        }
+        $this->assertSame('All products', config('pos_layouts.general.all'));
+        $this->assertSame('Your purchase', config('pos_layouts.general.display.order'));
     }
 }

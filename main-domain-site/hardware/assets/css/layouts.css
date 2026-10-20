@@ -1,0 +1,71 @@
+/* Public and sign-in presets follow the website business, including for guests. */
+.public-skip-link { position:absolute; left:18px; top:-100px; z-index:10; }
+.public-skip-link:focus { top:8px; padding:10px; background:var(--bar-bg); }
+.public-experience { padding-top:0; }
+.public-layout-pharmacy { --bar-bg:#f1f8f7; --bar-panel:#fff; --bar-gold:#187c83; --bar-cream:#173f47; --bar-muted:#5e7b7d; --public-accent:#187c83; --public-dark:#164e57; --public-soft:#e3f1ee; --public-border:#d1e4e0; --public-card:#fff; }
+.public-layout-supermarket { --bar-bg:#fbfaf2; --bar-panel:#fff; --bar-gold:#347a43; --bar-cream:#214d31; --bar-muted:#6b7c5e; --public-accent:#347a43; --public-dark:#205237; --public-soft:#eef4dd; --public-border:#dde6cd; --public-card:#fffef7; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) { color:var(--bar-cream); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-nav { border-color:var(--public-border); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-logo { font-family:Arial,sans-serif; font-weight:700; letter-spacing:-.04em; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-logo small { letter-spacing:.16em; color:var(--public-accent); font-weight:600; text-transform:uppercase; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-hero { min-height:620px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-hero h1 { font-family:Arial,sans-serif; font-size:clamp(40px,4.5vw,66px); line-height:1.08; font-weight:700; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-hero h1 em { font-style:normal; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-button { border-color:var(--public-accent); background:var(--public-accent); color:#fff!important; border-radius:10px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-button.outline { background:transparent; color:var(--public-accent)!important; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-button:hover { filter:brightness(.95); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art { background:var(--public-dark); border-radius:28px; overflow:hidden; margin:30px 0; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art img { height:490px; width:100%; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art-caption { color:#d3e7d2; font-size:9px; left:24px; right:24px; bottom:24px; text-align:center; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-strip { border-color:var(--public-border); color:var(--public-accent); font:600 14px Arial,sans-serif; padding:25px 0; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-card { border-color:var(--public-border); background:var(--public-card); border-radius:16px; box-shadow:0 6px 20px #183e2a04; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-card h3 { font-family:Arial,sans-serif; font-size:23px; font-weight:600; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-section h2 { font-family:Arial,sans-serif; font-weight:600; letter-spacing:-.04em; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-callout { background:var(--public-soft); border-color:var(--public-border); border-radius:18px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-callout p { max-width:540px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-footer { border-color:var(--public-border); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-shell { border-color:var(--public-border); background:#fff; border-radius:22px; box-shadow:0 24px 70px #164e5710; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-visual { color:#fff; background-color:var(--public-dark); background-size:cover; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-brand { color:#f3f9ef; font-size:17px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-brand-mark { color:#c2e0bc; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-copy h1 { color:#fff; font-family:Arial,sans-serif; font-size:clamp(36px,4vw,52px); font-weight:600; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-eyebrow,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-points,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .mart-preview-icon,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-footnote a { color:#c5e4bf; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-copy p { color:#d3e8de; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .mart-preview { border-color:#ffffff30; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .mart-preview-item strong { color:#eff8ec; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .mart-preview-item small { color:#c1dacb; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-form-panel { background:#fff; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-heading h2 { font-family:Arial,sans-serif; color:var(--bar-cream); font-weight:600; font-size:35px; letter-spacing:-.04em; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-heading p,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-register { color:var(--bar-muted); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-heading .bar-eyebrow,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-forgot-link,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-register-link { color:var(--public-accent); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-field label,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-remember { color:var(--bar-cream); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-field-input { background:#fff; color:var(--bar-cream); border-color:var(--public-border); border-radius:10px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-field-input:focus { outline-color:var(--public-accent); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-field-control>i { color:var(--bar-muted); }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-login-submit { background:var(--public-accent); color:#fff; border-radius:10px; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .modern-remember input { accent-color:var(--public-accent); }
+.public-layout-pharmacy .modern-login-visual { order:1; background-image:linear-gradient(90deg,#164e57f7,#164e57b0),url('../img/pharmacy-display.svg'); }
+.public-layout-pharmacy .bar-art { border-radius:100px 24px 100px 24px; }
+.public-layout-supermarket .modern-login-visual { background-image:linear-gradient(90deg,#205237fa,#205237a8),url('../img/supermarket-display.svg'); }
+.public-layout-supermarket .bar-art { border-radius:24px 90px 24px 24px; }
+.public-layout-supermarket .bar-strip { background:#f4edb9; border-color:#eae0a4; border-radius:12px; padding-inline:20px; }
+@media(max-width:800px){:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art img{height:380px}:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art{margin:20px 0 35px}:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-hero h1{font-size:clamp(38px,8vw,56px)}.public-layout-pharmacy .modern-login-visual{order:0}}
+@media(max-width:480px){.bar-nav{align-items:flex-start}.bar-logo{font-size:20px}.bar-nav-links .bar-button{min-height:40px;padding-inline:12px;white-space:nowrap}:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-strip{font-size:12px;gap:15px}:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-art-caption{letter-spacing:.1em}.modern-login-points{font-size:10px}.mart-preview-item strong{font-size:10px}}
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .right-col>.row summary,
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .right-col>.row .tw-text-white { color:var(--public-dark)!important; }
+:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .right-col>.row .tw-border-white { border-color:var(--public-border)!important; }
+.public-layout-general { --bar-bg:#f2f5fa; --bar-panel:#fff; --bar-gold:#3c6599; --bar-cream:#273f60; --bar-muted:#61748e; --public-accent:#3c6599; --public-dark:#263c5a; --public-soft:#e7edf8; --public-border:#d5dfed; --public-card:#fff; }
+.public-layout-hardware { --bar-bg:#f6f3ed; --bar-panel:#fff; --bar-gold:#a65e23; --bar-cream:#57412b; --bar-muted:#83715c; --public-accent:#a65e23; --public-dark:#3e352c; --public-soft:#f2e7d5; --public-border:#e5d6bf; --public-card:#fffdf8; }
+.public-layout-general .modern-login-visual { background-image:linear-gradient(90deg,#263c5afa,#263c5ab0),url('../img/general-goods-display.svg'); }
+.public-layout-hardware .modern-login-visual { background-image:linear-gradient(90deg,#3e352cfa,#3e352cb0),url('../img/hardware-display.svg'); }
+.public-layout-hardware .bar-art { border-radius:12px; }
+.public-layout-general .bar-art { border-radius:32px; }
+.public-layout-hardware .modern-login-eyebrow,.public-layout-hardware .modern-login-points,.public-layout-hardware .mart-preview-icon,.public-layout-hardware .modern-login-footnote a { color:#f1c48d; }
+.public-layout-general .modern-login-eyebrow,.public-layout-general .modern-login-points,.public-layout-general .mart-preview-icon,.public-layout-general .modern-login-footnote a { color:#c8dcf5; }

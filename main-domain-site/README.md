@@ -1,9 +1,13 @@
 ﻿# Main-domain website collection
 
-Three self-contained static websites are available:
+Five self-contained static websites are available. General Goods / Mixed Business
+is suitable for stores selling across several departments; the specialist designs
+also work with any product catalogue.
 
 | Business | Folder | Local preview |
 | --- | --- | --- |
+| General Goods / Mixed Business | `general-goods/` | `http://localhost/perryposs/main-domain-site/general-goods/` |
+| Hardware & Building Supplies | `hardware/` | `http://localhost/perryposs/main-domain-site/hardware/` |
 | Pharmacy | `pharmacy/` | `http://localhost/perryposs/main-domain-site/pharmacy/` |
 | Supermarket | `supermarket/` | `http://localhost/perryposs/main-domain-site/supermarket/` |
 | Bar & Restaurant | `bar-restaurant/` | `http://localhost/perryposs/main-domain-site/bar-restaurant/` |
@@ -35,8 +39,16 @@ Keep the site and POS on the same origin, or configure allowed origins on the PO
 
 1. Back up the destination website.
 2. Configure your chosen folder and test the staff link and optional catalogue.
-3. Upload **that folder's contents**, including its `assets/`, `robots.txt` and `.htaccess`, into the domain document root (usually `public_html`). Do not upload all three versions into the same root.
+3. Upload **that folder's contents**, including its `assets/`, `robots.txt` and `.htaccess`, into the domain document root (usually `public_html`). Upload only the selected version.
 4. Enable HTTPS and test on desktop and mobile.
 5. If publishing a sitemap, generate it with the actual domain. The new variants do not embed the old Prak domain in robots or sitemap files.
 
 Local artwork and fonts require no third-party image or font services. The only optional external dependency is your configured POS catalogue.
+
+## Rebuild the collection
+
+From the project root run `php scripts/build-static-sites.php`. The builder uses
+`config/public_page_layouts.php`, the public-page CSS/artwork, and
+`main-domain-site/template-kit/` as its sources. It rebuilds the five folders and
+gallery while preserving each existing `assets/js/site-config.js`. Edit the source
+templates/configuration rather than generated HTML if you plan to rebuild later.
