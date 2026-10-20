@@ -8,6 +8,7 @@ const {serverUrl, endpoint, monitor, validState} = require('./lib.cjs');
 let config = {}, token = '', settingsWindow, displayWindow, tray, timer, busy = false, quitting = false;
 let loaded = false, lastState = {active: false, connected: false, order: null}, lastSuccess = 0, nextLoad = 0;
 let message = 'Pair the app with your POS register.', previewUntil = 0;
+let nextPollAt = 0, failures = 0;
 const setupUrl = pathToFileURL(path.join(__dirname, 'setup.html')).href;
 const configFile = () => path.join(app.getPath('userData'), 'settings.json');
 function saveConfig() {
@@ -108,24 +109,29 @@ async function api(action, body, credential = token, base = config.server) {
     return response.json();
 }
 async function poll() {
-    if (busy || !token || !config.server) return;
+    if (busy || !token || !config.server || Date.now() < nextPollAt) return;
     busy = true;
+    let delay = 500;
     try {
         const state = await api('state');
         if (!validState(state)) throw new Error('The server returned an invalid display response.');
         lastState = state; lastSuccess = Date.now();
+        failures = 0;
+        delay = state.active && state.connected ? 500 : 1500;
         message = !chosenMonitor() ? 'Connect a second monitor, or allow the primary screen below.' :
             state.connected ? (state.active ? 'Connected · displaying the current order.' : 'Connected · display hidden by the POS.') : 'Waiting for this register to open.';
         if (!loaded) await loadDisplay();
         applyState();
     } catch (error) {
+        failures++;
+        delay = Math.min(15000, 1000 * Math.pow(2, Math.min(failures - 1, 4)));
         lastState = {active: false, connected: false, order: null};
         message = error.message;
         if (displayWindow && !displayWindow.isDestroyed() && loaded) displayWindow.webContents.send('display:state', lastState);
         if (error.status === 401) {
             token = ''; destroyDisplay(); saveConfig(); openSettings();
         } else if (Date.now() - lastSuccess > 15000 && displayWindow && !displayWindow.isDestroyed()) displayWindow.hide();
-    } finally { busy = false; }
+    } finally { nextPollAt = Date.now() + delay; busy = false; }
 }
 function trustedSetup(event) {
     if (!settingsWindow || event.sender !== settingsWindow.webContents || event.senderFrame !== settingsWindow.webContents.mainFrame || event.senderFrame.url !== setupUrl) throw new Error('Unauthorized app request.');
@@ -165,7 +171,7 @@ else {
                 const name = String(data.name || 'Customer screen').trim().slice(0, 80) || 'Customer screen';
                 const result = await api('pair', {code: data.code, name}, '', base);
                 if (!/^[a-zA-Z0-9]{64}$/.test(result.token || '')) throw new Error('The server did not return a valid device credential.');
-                config = {...config, server: base, name}; token = result.token; nextLoad = 0;
+                config = {...config, server: base, name}; token = result.token; nextLoad = 0; nextPollAt = 0; failures = 0;
                 saveConfig(); await poll(); return {ok: true};
             } catch (error) { return {ok: false, error: error.message}; }
         });
@@ -194,6 +200,6 @@ else {
             }
         });
         if (!token || !process.argv.includes('--background')) openSettings();
-        await poll(); timer = setInterval(poll, 2000);
+        await poll(); timer = setInterval(poll, 250);
     }).catch(error => { console.error(error.message); app.quit(); });
 }

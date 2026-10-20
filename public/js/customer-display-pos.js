@@ -110,6 +110,9 @@
             }
         });
         $(document).on('invoice_total_calculated', function () { setTimeout(send, 0); });
+        $(document).on('input change', '#pos_table input, #final_total_input', function () { setTimeout(send, 0); });
+        var orderRows = document.querySelector('#pos_table tbody');
+        if (orderRows) new MutationObserver(function () { setTimeout(send, 0); }).observe(orderRows, {childList: true});
         // Also catches programmatic value changes, removals and form resets.
         window.setInterval(send, 500);
         window.addEventListener('pagehide', function () {

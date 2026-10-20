@@ -4,7 +4,7 @@ A Windows companion for the existing Laravel POS. The cashier keeps using the br
 
 ## Install and pair
 
-1. Install `dist/AdomGrace-Legacy-POS-Customer-Display-Setup-1.0.1.exe` on the POS computer and open **AdomGrace Legacy POS Customer Display**.
+1. Install `dist/AdomGrace-Legacy-POS-Customer-Display-Setup-1.0.2.exe` on the POS computer and open **AdomGrace Legacy POS Customer Display**.
 2. Set Windows display settings to **Extend these displays** and connect the customer monitor.
 3. In `/pos/create`, select **Display app → Generate pairing code**.
 4. Enter the server address shown in that dialog, a display name, and the eight-digit code into the Windows app. Codes expire after five minutes and can be used once.
@@ -24,9 +24,11 @@ php artisan migrate --path=database/migrations/2026_10_20_120000_create_customer
 php artisan route:clear
 ```
 
+Without terminal access, open cPanel's **phpMyAdmin**, select the existing POS database (the `DB_DATABASE` entry in the server's `.env`), and import `database/customer-display-companion-cpanel.sql`. It creates the companion table and records the migration as applied. Upload the updated project files too. If a cached route file exists, remove only `bootstrap/cache/routes-v7.php` through File Manager so Laravel loads the new routes.
+
 The server address must use HTTPS, including any installation subdirectory (for example `https://example.com/pos/public`). HTTP is accepted only for localhost development. Do not enter `/pos/create` or `/login` as the server address.
 
-No WebSocket service or incoming port on the POS computer is required. The cashier publishes a heartbeat/order every two seconds; the app reads it every two seconds. A new order normally appears within approximately four seconds. A register heartbeat expires after 15 seconds, clears the customer order, and hides the window. Network errors clear the visible order immediately; after 15 seconds without a successful connection the window hides. Polling reconnects automatically. The last order is deliberately not retained on disk.
+No WebSocket service or incoming port on the POS computer is required. The cashier sends order changes immediately with an 80 ms coalescing delay, and sends an unchanged heartbeat approximately every four seconds. The app checks every 500?750 ms while the display is active, and less often while inactive. Active order changes should usually appear in about a second, depending on network and server response times; this is fast polling rather than a WebSocket connection. Failed requests retry with exponential backoff up to 15 seconds. A register heartbeat expires after 15 seconds, clears the customer order, and hides the window. Network errors clear the visible order immediately; after 15 seconds without a successful connection the window hides. Polling reconnects automatically. The last order is deliberately not retained on disk.
 
 Keep the Laravel cache persistent between requests (`file`, `database`, or Redis); do not use the `array` driver in production. With multiple web servers, use a shared cache. Cache entries are short lived. Ensure the web server forwards the `Authorization` header to PHP, and allow the companion endpoints through the hosting firewall. Each device has its own polling rate limit so registers behind one public IP can operate together. Pairing attempts are separately rate limited.
 

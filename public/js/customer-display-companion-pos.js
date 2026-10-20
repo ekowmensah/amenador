@@ -17,6 +17,7 @@
         }
         var csrf = $('meta[name="csrf-token"]').attr('content') || $('input[name="_token"]').first().val();
         var devices = [], latest = null, busy = false, stopped = false, manual = null;
+        var lastSent = '', lastSentAt = 0, changeTimer = null;
         var setting = document.getElementById('customer-display-auto-open');
         var autoOpen = !setting || setting.value === '1';
         var status = $('#display-companion-status');
@@ -48,12 +49,28 @@
         }
         function publish() {
             if (stopped || busy || !devices.length || !latest) return;
+            var signature = JSON.stringify({order: latest, active: active()});
+            if (signature === lastSent && Date.now() - lastSentAt < 4000) return;
             busy = true;
             request('publish', {order: latest, active: active(), owner: owner}).done(function () {
+                lastSent = signature;
+                lastSentAt = Date.now();
                 status.text(active() ? 'Sending this register’s order to the desktop app.' : 'Desktop display is hidden.');
-            }).fail(error).always(function () { busy = false; });
+            }).fail(error).always(function () {
+                busy = false;
+                // Send edits made during a request as soon as that request completes.
+                if (lastSent === signature && JSON.stringify({order: latest, active: active()}) !== signature) scheduleChange();
+            });
         }
-        document.addEventListener('pos-customer-snapshot', function (event) { latest = event.detail; });
+        function scheduleChange() {
+            if (changeTimer !== null) return;
+            changeTimer = setTimeout(function () { changeTimer = null; tick(); }, 80);
+        }
+        document.addEventListener('pos-customer-snapshot', function (event) {
+            var changed = JSON.stringify(latest) !== JSON.stringify(event.detail);
+            latest = event.detail;
+            if (changed) scheduleChange();
+        });
         checkbox.on('change', function () {
             preferred = this.checked; manual = null;
             localStorage.setItem('amenador-display-mode', preferred ? 'desktop' : 'browser');
@@ -84,6 +101,7 @@
         }
         window.addEventListener('pagehide', function () {
             stopped = true;
+            clearTimeout(changeTimer); changeTimer = null;
             try {
                 var lease = JSON.parse(localStorage.getItem('amenador-display-lease') || 'null');
                 if (lease && lease.owner === owner) localStorage.removeItem('amenador-display-lease');

@@ -31,6 +31,10 @@ const server=http.createServer((req,res)=>{
  current={active:true,connected:true,order:{items:[{name:'<img src=x onerror=alert(1)> Beer',quantity:'12,345.50',amount:'GHS 125.00'}],location:'Bar',subtotal:'GHS 125.00',total:'GHS 125.00',discount:'0',tax:'0',adjustments:'0',has_discount:false,has_tax:false,has_adjustments:false}};
  await display.waitForFunction(()=>document.querySelector('#order-total').textContent==='GHS 125.00');assert.equal(await display.locator('.order-item img').count(),0);
  assert.equal(await display.locator('.order-item > span').first().textContent(),'12,345.50');
+ const changedAt=Date.now();current.order.items[0].quantity='3';current.order.total='GHS 150.00';
+ await display.waitForFunction(()=>document.querySelector('#order-total').textContent==='GHS 150.00');
+ const updateMs=Date.now()-changedAt;assert(updateMs<2000,'Active display update should not incur the old two-second wait');
+ console.log('Active desktop update: '+updateMs+' ms on local test server.');
  assert(await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/screen')).isVisible()));
  await display.screenshot({path:path.join(os.tmpdir(),'amenador-desktop-app.png')});
  current={active:false,connected:false,order:null};await display.waitForFunction(()=>document.querySelector('#order-items').children.length===0);
