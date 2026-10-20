@@ -11,6 +11,7 @@
         $pos_preset = config('pos_layouts.'.$pos_layout_key);
     @endphp
     <section class="content no-print pos-v2-shell">
+        <input type="hidden" id="customer-display-auto-open" value="{{ (bool) ($business_details->common_settings['auto_open_customer_display'] ?? true) ? '1' : '0' }}">
         <input type="hidden" id="amount_rounding_method" value="{{ $pos_settings['amount_rounding_method'] ?? '' }}">
 
         @if (!empty($pos_settings['allow_overselling']))
@@ -37,7 +38,10 @@
             'id' => 'add_pos_sell_form',
         ]) !!}
 
-        <div class="pos-v2-workspace @if (!$show_product_browser || isMobile()) pos-v2-workspace--cart-only @endif">
+        @if (!$show_product_browser)
+            <div class="pos-customer-search-bar"></div>
+        @endif
+        <div class="pos-v2-workspace @if (!$show_product_browser) pos-v2-workspace--cart-only @endif">
             <section class="pos-v2-panel pos-v2-cart-panel" aria-label="Current sale">
                 <header class="hospitality-ticket-heading">
                     <div><span>{{ $pos_preset['ticket'] }}</span><h2>{{ $pos_preset['heading'] }}</h2></div>
@@ -71,8 +75,8 @@
                 </div>
             </section>
 
-            @if ($show_product_browser && !isMobile())
-                <aside class="pos-v2-panel pos-v2-catalog-panel" aria-label="Product browser">
+            @if ($show_product_browser)
+                <aside class="pos-v2-panel pos-v2-catalog-panel is-mobile-catalogue-collapsed" aria-label="Product browser">
                     @include('sale_pos.partials.pos_sidebar')
                 </aside>
             @endif
@@ -85,10 +89,6 @@
     <div class="modal fade contact_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
         @include('contact.create', ['quick_add' => true])
     </div>
-
-    @if ($show_product_browser && isMobile())
-        @include('sale_pos.partials.mobile_product_suggestions')
-    @endif
 
     <div class="modal fade register_details_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel"></div>
     <div class="modal fade close_register_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel"></div>

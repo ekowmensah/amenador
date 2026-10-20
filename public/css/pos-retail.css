@@ -71,3 +71,51 @@ body.pos-layout-general, body.pos-layout-hardware { --pos-primary:var(--retail-a
 .pos-layout-hardware .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .pos-layout-hardware .pos-v2-workspace--cart-only { grid-template-columns:minmax(0,1fr); }
 @media(max-width:850px){.pos-layout-hardware .pos-v2-workspace{grid-template-columns:minmax(0,1fr)}.pos-layout-hardware .pos-v2-catalog-panel{order:-1}}
+/* Keep every desktop preset at three columns, or four on wide displays. */
+@media(min-width:851px) {
+    .hospitality-pos .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media(min-width:1550px) {
+    .hospitality-pos .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+/* Compact mobile tiles: small thumbnails, readable names and prices. */
+@media(max-width:850px) {
+    .hospitality-pos .pos-v2-catalog-panel .product_list { height:104px; min-height:104px; }
+    .hospitality-pos .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    .hospitality-pos .pos-v2-catalog-panel .pos-modern-product {
+        display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto;
+        grid-template-areas:"image copy" "stock stock"; gap:5px 8px; height:104px!important;
+        padding:9px; border-radius:9px!important; align-items:center;
+    }
+    .hospitality-pos .pos-v2-catalog-panel .pos-modern-product .image-container {
+        grid-area:image; width:38px; height:38px; min-height:38px!important; margin:0;
+        background-size:contain!important; background-color:transparent!important; border:0;
+    }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-copy {
+        grid-area:copy; min-width:0; min-height:0!important; padding:0!important; gap:4px;
+        text-align:start; align-items:stretch;
+    }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-name {
+        font-size:12px; line-height:1.3; font-weight:600; white-space:normal;
+        display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-price { font-size:12px; line-height:1.25; white-space:normal; overflow-wrap:anywhere; }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-meta { gap:0; }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-meta::after,
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-sku { display:none; }
+    .hospitality-pos .pos-v2-catalog-panel .pos-product-stock {
+        grid-area:stock; position:static; justify-self:start; max-width:100%;
+        font-size:9px; line-height:1.2; padding:2px 5px; border-radius:4px;
+    }
+    .hospitality-pos .hospitality-categories { gap:6px; padding-bottom:8px; }
+    .hospitality-pos .hospitality-category { min-height:40px; padding-inline:12px; font-size:12px; }
+    .hospitality-pos .pos-stock-filter button { min-height:32px; font-size:10px; }
+}
+@media(min-width:600px) and (max-width:850px) {
+    .hospitality-pos .pos-v2-catalog-panel #product_list_body { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media(max-width:359px) {
+    .hospitality-pos .pos-v2-catalog-panel .product_list { height:80px; min-height:80px; }
+    .hospitality-pos .pos-v2-catalog-panel #product_list_body { grid-template-columns:minmax(0,1fr); }
+    .hospitality-pos .pos-v2-catalog-panel .pos-modern-product { height:80px!important; grid-template-columns:40px minmax(0,1fr); gap:3px 10px; }
+}

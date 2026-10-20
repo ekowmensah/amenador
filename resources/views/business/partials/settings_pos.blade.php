@@ -7,6 +7,16 @@
                 <p class="help-block">Choose General Goods / Mixed Business for a store with several departments, or a specialist layout. Every layout can sell any product category. Save, then reopen POS to apply it. Product data, stock rules and payments stay the same.</p>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                {!! Form::hidden('common_settings[auto_open_customer_display]', 0) !!}
+                <label for="auto_open_customer_display">
+                    {!! Form::checkbox('common_settings[auto_open_customer_display]', 1, (bool) ($common_settings['auto_open_customer_display'] ?? true), ['id' => 'auto_open_customer_display']) !!}
+                    Automatically open customer display
+                </label>
+                <p class="help-block">Open the customer screen when POS starts. Browser pop-up and screen permissions still apply. When disabled, use the customer display icon to open it manually.</p>
+            </div>
+        </div>
     </div>
     <h4>@lang('business.add_keyboard_shortcuts'):</h4>
     <p class="help-block">@lang('lang_v1.shortcut_help'); @lang('lang_v1.example'): <b>ctrl+shift+b</b>, <b>ctrl+h</b></p>

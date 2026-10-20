@@ -87,7 +87,14 @@ $(document).ready(function () {
     });
 
     //get customer
+    $(document).on('select2:open', 'select#customer_id', function () {
+        var select = $(this).data('select2');
+        if (select && select.dropdown && select.dropdown.$dropdown) {
+            select.dropdown.$dropdown.addClass('pos-customer-search-dropdown');
+        }
+    });
     $('select#customer_id').select2({
+        width: '100%',
         ajax: {
             url: base_path + '/contacts/customers',
             dataType: 'json',

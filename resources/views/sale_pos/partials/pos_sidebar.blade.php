@@ -14,7 +14,15 @@
 </div>
 
 @if (request()->is('pos/create'))
+    <div class="pos-customer-search-bar"></div>
     <div class="hospitality-search-slot" data-placeholder="{{ $pos_preset['search'] }}" data-empty="{{ $pos_preset['empty'] }}" data-hint="{{ $pos_preset['hint'] }}" data-icon="{{ $pos_preset['icon'] }}"></div>
+    <div class="pos-mobile-order-tools">
+        <button type="button" id="pos-mobile-catalogue-toggle" aria-expanded="false" aria-controls="pos-mobile-catalogue-content">
+            <i class="fas fa-th-large" aria-hidden="true"></i><span>Browse products</span><i class="fas fa-chevron-down pos-mobile-toggle-arrow" aria-hidden="true"></i>
+        </button>
+        <button type="button" id="pos-mobile-view-order"><i class="fas fa-receipt" aria-hidden="true"></i><span>View order</span><span class="hospitality-mobile-item-count">0 items</span></button>
+    </div>
+    <div id="pos-mobile-catalogue-content" class="pos-mobile-catalogue-content is-mobile-collapsed">
     <nav class="hospitality-categories" aria-label="Product categories">
         <button type="button" class="hospitality-category main-category is-active" data-value="all" data-parent="0" aria-pressed="true"><i class="fas {{ $pos_preset['icon'] }}" aria-hidden="true"></i>{{ $pos_preset['all'] }}</button>
         @foreach ($categories ?? [] as $category)
@@ -223,3 +231,6 @@
     <span><i class="fas fa-mouse-pointer"></i> Select a product to add it</span>
     <span><i class="fas fa-arrows-alt-v"></i> Scroll for more</span>
 </div>
+@if (request()->is('pos/create'))
+    </div>
+@endif

@@ -3,6 +3,8 @@
     $(function () {
         var button = document.getElementById('open-customer-display');
         if (!button) return;
+        var autoOpenSetting = document.getElementById('customer-display-auto-open');
+        var autoOpen = !autoOpenSetting || autoOpenSetting.value === '1';
         var display = null;
         var screenDetails = null;
         var shuttingDown = false;
@@ -105,9 +107,14 @@
             if (display && !display.closed) display.close();
         });
         window.addEventListener('pageshow', function (event) {
-            if (event.persisted) { shuttingDown = false; openDisplay(false); detectScreens(false); }
+            if (event.persisted) {
+                shuttingDown = false;
+                if (autoOpen) { openDisplay(false); detectScreens(false); }
+            }
         });
-        openDisplay(false);
-        detectScreens(false);
+        if (autoOpen) {
+            openDisplay(false);
+            detectScreens(false);
+        }
     });
 })(jQuery);
