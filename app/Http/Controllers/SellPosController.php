@@ -162,7 +162,15 @@ class SellPosController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return response()->view('sale_pos.customer_display')->header('Cache-Control', 'no-store');
+        $business = Business::findOrFail($business_id);
+        $pos_layout_key = $business->common_settings['pos_layout'] ?? 'restaurant';
+        if (!array_key_exists($pos_layout_key, config('pos_layouts'))) {
+            $pos_layout_key = 'restaurant';
+        }
+        $display_preset = config('pos_layouts.'.$pos_layout_key.'.display');
+
+        return response()->view('sale_pos.customer_display', compact('business', 'pos_layout_key', 'display_preset'))
+            ->header('Cache-Control', 'no-store');
     }
 
     public function create()
@@ -3021,6 +3029,9 @@ class SellPosController extends Controller
         $is_email_attachment = false;
 
         $blade_file = 'download_pdf';
+        if (in_array($receipt_details->design ?? '', ['modern', 'modern_invoice'], true)) {
+            $blade_file = 'modern_invoice';
+        }
         if (!empty($receipt_details->is_export)) {
             $blade_file = 'download_export_pdf';
         }

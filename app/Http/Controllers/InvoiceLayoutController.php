@@ -250,6 +250,8 @@ class InvoiceLayoutController extends Controller
     private function getDesigns()
     {
         return ['classic' => __('lang_v1.classic').' ('.__('lang_v1.for_normal_printer').')',
+            'modern' => 'Modern POS Receipt (80mm)',
+            'modern_invoice' => 'Modern Invoice (A4)',
             'elegant' => __('lang_v1.elegant').' ('.__('lang_v1.for_normal_printer').')',
             'detailed' => __('lang_v1.detailed').' ('.__('lang_v1.for_normal_printer').')',
             'columnize-taxes' => __('lang_v1.columnize_taxes').' ('.__('lang_v1.for_normal_printer').')',

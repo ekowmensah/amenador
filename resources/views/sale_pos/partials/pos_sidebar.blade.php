@@ -1,7 +1,7 @@
 <div class="pos-catalog-heading">
     <div>
-        <span class="pos-catalog-eyebrow">{{ request()->is('pos/create') ? 'BAR & RESTAURANT' : 'Quick selection' }}</span>
-        <h3>{{ request()->is('pos/create') ? 'On the menu' : 'Product catalogue' }}</h3>
+        <span class="pos-catalog-eyebrow">{{ request()->is('pos/create') ? $pos_preset['eyebrow'] : 'Quick selection' }}</span>
+        <h3>{{ request()->is('pos/create') ? $pos_preset['catalogue'] : 'Product catalogue' }}</h3>
     </div>
     <div class="pos-catalog-heading-actions">
         <span class="pos-catalog-ready"><i class="fas fa-circle"></i> Ready to add</span>
@@ -14,9 +14,9 @@
 </div>
 
 @if (request()->is('pos/create'))
-    <div class="hospitality-search-slot"></div>
-    <nav class="hospitality-categories" aria-label="Menu categories">
-        <button type="button" class="hospitality-category main-category is-active" data-value="all" data-parent="0" aria-pressed="true"><i class="fas fa-utensils" aria-hidden="true"></i>Full menu</button>
+    <div class="hospitality-search-slot" data-placeholder="{{ $pos_preset['search'] }}" data-empty="{{ $pos_preset['empty'] }}" data-hint="{{ $pos_preset['hint'] }}" data-icon="{{ $pos_preset['icon'] }}"></div>
+    <nav class="hospitality-categories" aria-label="Product categories">
+        <button type="button" class="hospitality-category main-category is-active" data-value="all" data-parent="0" aria-pressed="true"><i class="fas {{ $pos_preset['icon'] }}" aria-hidden="true"></i>{{ $pos_preset['all'] }}</button>
         @foreach ($categories ?? [] as $category)
             <button type="button" class="hospitality-category main-category" data-value="{{ $category['id'] }}" data-parent="0" aria-pressed="false">{{ $category['name'] }}</button>
         @endforeach

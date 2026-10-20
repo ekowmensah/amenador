@@ -1,0 +1,1 @@
+<p class="help-block">Modern POS Receipt fits 80mm thermal paper. Modern Invoice uses an A4 layout. Both use your labels and display settings; PDF downloads and email attachments use the A4 version.</p>

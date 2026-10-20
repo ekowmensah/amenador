@@ -30,7 +30,7 @@
         var signature = JSON.stringify(order);
         if (signature === previous) return;
         previous = signature;
-        byId('display-location').textContent = order.location || 'BAR & LOUNGE';
+        byId('display-location').textContent = order.location || document.body.dataset.context || '';
         var fragment = document.createDocumentFragment();
         order.items.forEach(function (item, index) {
             var row = document.createElement('div'); row.className = 'order-item';

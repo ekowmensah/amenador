@@ -1,4 +1,13 @@
 <div class="pos-tab-content">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                {!! Form::label('pos_layout', 'POS layout') !!}
+                {!! Form::select('common_settings[pos_layout]', collect(config('pos_layouts'))->map(fn ($layout) => $layout['name'])->all(), $common_settings['pos_layout'] ?? 'restaurant', ['id' => 'pos_layout', 'class' => 'form-control']) !!}
+                <p class="help-block">Choose the layout for this business. Save, then reopen POS to apply it. Product data, stock rules and payments stay the same.</p>
+            </div>
+        </div>
+    </div>
     <h4>@lang('business.add_keyboard_shortcuts'):</h4>
     <p class="help-block">@lang('lang_v1.shortcut_help'); @lang('lang_v1.example'): <b>ctrl+shift+b</b>, <b>ctrl+h</b></p>
     <p class="help-block">

@@ -14,6 +14,10 @@
 
 @php
     $whitelist = ['127.0.0.1', '::1'];
+    $selected_pos_layout = $pos_layout_key ?? session('business.common_settings.pos_layout', 'restaurant');
+    if (!array_key_exists($selected_pos_layout ?? '', config('pos_layouts'))) {
+        $selected_pos_layout = 'restaurant';
+    }
 @endphp
 
 <!DOCTYPE html>
@@ -47,11 +51,12 @@
     <link rel="stylesheet" href="{{ asset('css/system-theme.css?v=' . filemtime(public_path('css/system-theme.css'))) }}">
     @if (request()->is('pos/create'))
         <link rel="stylesheet" href="{{ asset('css/pos-hospitality.css?v=' . filemtime(public_path('css/pos-hospitality.css'))) }}">
+        <link rel="stylesheet" href="{{ asset('css/pos-retail.css?v=' . filemtime(public_path('css/pos-retail.css'))) }}">
     @endif
 
 </head>
 <body
-    class="tw-font-sans tw-antialiased tw-text-gray-900 tw-bg-gray-100 @if (request()->is('pos/create')) hospitality-pos @endif @if ($pos_layout) hold-transition lockscreen @else hold-transition skin-@if (!empty(session('business.theme_color'))){{ session('business.theme_color') }}@else{{ 'blue-light' }} @endif sidebar-mini @endif" >
+    class="tw-font-sans tw-antialiased tw-text-gray-900 tw-bg-gray-100 @if (request()->is('pos/create')) hospitality-pos pos-layout-{{ $selected_pos_layout }} @endif @if ($pos_layout) hold-transition lockscreen @else hold-transition skin-@if (!empty(session('business.theme_color'))){{ session('business.theme_color') }}@else{{ 'blue-light' }} @endif sidebar-mini @endif" >
     <div class="tw-flex">
         <script type="text/javascript">
             if (localStorage.getItem("upos_sidebar_collapse") == 'true') {

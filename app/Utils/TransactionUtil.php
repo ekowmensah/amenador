@@ -2128,6 +2128,7 @@ class TransactionUtil extends Util
                         'variation' => (empty($variation->name) || $variation->name == 'DUMMY') ? '' : $variation->name,
                         //Field for 2nd column
                         'quantity' => $this->num_f($modifier_line->quantity, false, $business_details),
+                        'quantity_uf' => $modifier_line->quantity,
                         'units' => ! empty($unit->short_name) ? $unit->short_name : '',
 
                         //Field for 3rd column
@@ -2209,6 +2210,7 @@ class TransactionUtil extends Util
                 'variation' => (empty($variation->name) || $variation->name == 'DUMMY') ? '' : $variation->name,
                 //Field for 2nd column
                 'quantity' => $this->num_f($line->quantity_returned, false, $business_details, true),
+                'quantity_uf' => $line->quantity_returned,
                 'units' => $unit_name,
 
                 'unit_price' => $this->num_f($line->unit_price, false, $business_details),
@@ -6242,6 +6244,9 @@ class TransactionUtil extends Util
         $location_details = $receipt_contents['location_details'];
 
         $blade_file = 'download_pdf';
+        if (in_array($receipt_details->design ?? '', ['modern', 'modern_invoice'], true)) {
+            $blade_file = 'modern_invoice';
+        }
         if (! empty($receipt_details->is_export)) {
             $blade_file = 'download_export_pdf';
         }

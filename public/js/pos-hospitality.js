@@ -9,11 +9,12 @@
             slot.append(column.children());
             column.remove();
             $('#customer_id').closest('.col-md-4').addClass('hospitality-customer-column');
-            search.attr('placeholder', 'Find a drink, dish or scan a barcode...').attr('aria-label', 'Search food and drinks');
+            search.attr('placeholder', slot.data('placeholder')).attr('aria-label', slot.data('placeholder'));
         }
-        $('.pos-cart-empty-state strong').text('Start a new tab');
-        $('.pos-cart-empty-state small').text('Choose a drink or dish from the menu to start this order.');
-        $('.pos-cart-empty-state > span i').attr('class', 'fas fa-utensils');
+        var preset = slot.length ? slot : $('.hospitality-ticket-heading');
+        if (preset.data('empty')) $('.pos-cart-empty-state strong').text(preset.data('empty'));
+        if (preset.data('hint')) $('.pos-cart-empty-state small').text(preset.data('hint'));
+        if (preset.data('icon')) $('.pos-cart-empty-state > span i').attr('class', 'fas ' + preset.data('icon'));
         $(document).on('click', '.main-category, .product_category', function () {
             var value = String($(this).data('value'));
             $('.hospitality-category').each(function () {

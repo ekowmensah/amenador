@@ -112,3 +112,37 @@ button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
     .grand-total > strong { font-size: 28px; }
     .order-footer { font-size: 9px; }
 }
+/* Business layout presets; dimensions remain tuned for compact POS monitors. */
+body.display-layout-pharmacy { --gold:#9ad8cc; --cream:#f4faf9; --display-bg:#164e57; --display-accent:#147c83; --display-ink:#204e54; --display-muted:#567c7c; --display-line:#d2e4e2; --display-soft:#e3f0ed; }
+body.display-layout-supermarket { --gold:#c4dfa0; --cream:#f8fbf3; --display-bg:#205237; --display-accent:#2b774b; --display-ink:#2c5036; --display-muted:#607855; --display-line:#d7e5cc; --display-soft:#e9f1dc; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) { background:var(--display-bg); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-header,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome { border-color:#ffffff22; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .brand small,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-tools>span,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome>p,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .welcome-note p { color:#d2e8dc; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-tools button { border-color:#ffffff45; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome h1 { font-family:Arial,sans-serif; font-size:clamp(29px,3.4vw,52px); font-weight:600; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome h1 em { font-style:normal; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome img { opacity:1; right:0; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-panel { color:var(--display-ink); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-heading h2,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .empty-order h3 { font-family:Arial,sans-serif; font-weight:600; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-heading .eyebrow,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .empty-order>span { color:var(--display-accent); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-heading>span { background:var(--display-soft); color:var(--display-accent); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-columns,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-item,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-totals { border-color:var(--display-line); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-columns,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-item small,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-totals>div,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .empty-order,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-footer { color:var(--display-muted); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-totals strong,
+:is(.display-layout-pharmacy,.display-layout-supermarket) .empty-order h3 { color:var(--display-ink); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .order-totals .grand-total { background:var(--display-bg); color:#f2f9ee; }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .grand-total>strong { color:var(--gold); }
+:is(.display-layout-pharmacy,.display-layout-supermarket) .grand-total small { color:#d2e8dc; }
+@media(max-height:650px){:is(.display-layout-pharmacy,.display-layout-supermarket) .display-welcome h1{font-size:clamp(28px,3vw,38px)}}

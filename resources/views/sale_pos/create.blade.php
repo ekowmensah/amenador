@@ -3,6 +3,13 @@
 @section('title', __('sale.pos_sale'))
 
 @section('content')
+    @php
+        $pos_layout_key = $business_details->common_settings['pos_layout'] ?? 'restaurant';
+        if (!array_key_exists($pos_layout_key, config('pos_layouts'))) {
+            $pos_layout_key = 'restaurant';
+        }
+        $pos_preset = config('pos_layouts.'.$pos_layout_key);
+    @endphp
     <section class="content no-print pos-v2-shell">
         <input type="hidden" id="amount_rounding_method" value="{{ $pos_settings['amount_rounding_method'] ?? '' }}">
 
@@ -33,7 +40,7 @@
         <div class="pos-v2-workspace @if (!$show_product_browser || isMobile()) pos-v2-workspace--cart-only @endif">
             <section class="pos-v2-panel pos-v2-cart-panel" aria-label="Current sale">
                 <header class="hospitality-ticket-heading">
-                    <div><span>CURRENT TAB</span><h2>Order details</h2></div>
+                    <div><span>{{ $pos_preset['ticket'] }}</span><h2>{{ $pos_preset['heading'] }}</h2></div>
                     <span class="hospitality-item-count" aria-live="polite">0 items</span>
                 </header>
                 <div class="pos-v2-cart-body">

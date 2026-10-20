@@ -32,6 +32,7 @@
           <div class="form-group">
             {!! Form::label('design', __('lang_v1.design') . ':*') !!}
               {!! Form::select('design', $designs, 'classic', ['class' => 'form-control']); !!}
+              @include('invoice_layout.partials.modern_design_help')
               <span class="help-block">
                 @lang('lang_v1.used_for_browser_based_printing')
               </span>
