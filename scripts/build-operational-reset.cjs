@@ -6,7 +6,7 @@ const tables = [
     'account_transactions', 'accounting_acc_trans_mappings', 'accounting_accounts_transactions', 'accounting_budgets',
     'activity_log', 'aiassistance_history', 'asset_maintenances', 'asset_transactions', 'asset_warranties', 'assets',
     'bookings', 'business_profits', 'cash_denominations', 'cash_register_transactions', 'cash_registers',
-    'categories', 'categorizables', 'units', 'contacts', 'crm_call_logs', 'crm_campaigns', 'crm_contact_person_commissions',
+    'brands', 'categories', 'categorizables', 'units', 'contacts', 'crm_call_logs', 'crm_campaigns', 'crm_contact_person_commissions',
     'crm_followup_invoices', 'crm_lead_users', 'crm_proposals', 'crm_schedule_logs', 'crm_schedule_users', 'crm_schedules',
     'discount_variations', 'discounts', 'document_and_notes',
     'essentials_attendances', 'essentials_document_shares', 'essentials_documents', 'essentials_leaves',
@@ -41,9 +41,9 @@ let sql = `-- ADOMGRACE LEGACY POS: OPERATIONAL RESET FOR ALL BUSINESSES
 -- No stored procedures, CREATE ROUTINE privilege, terminal or fixed database name required.
 -- Optional module tables are skipped if not installed.
 -- Keeps: users/passwords, roles/permissions, businesses, locations, subscriptions,
--- system/business settings, brands/taxes, account definitions,
+-- system/business settings, taxes, account definitions,
 -- invoice layouts, restaurant table definitions and desktop display pairings.
--- Clears: products, units, categories/subcategories, stock, customers/suppliers, sales/purchases/expenses/payments,
+-- Clears: products, brands, units, categories/subcategories, stock, customers/suppliers, sales/purchases/expenses/payments,
 -- registers, bookings, operational module records, logs and queued work.
 -- Recreates one empty default Walk-In Customer per business (required by POS).
 -- User records remain; obsolete CRM contact and category-based department/designation links are cleared.
@@ -76,6 +76,7 @@ SELECT (SELECT COUNT(*) FROM users) AS users_kept,
        (SELECT COUNT(*) FROM business) AS businesses_kept,
        (SELECT COUNT(*) FROM business_locations) AS locations_kept,
        (SELECT COUNT(*) FROM products) AS products_remaining,
+       (SELECT COUNT(*) FROM brands) AS brands_remaining,
        (SELECT COUNT(*) FROM units) AS units_remaining,
        (SELECT COUNT(*) FROM categories) AS categories_remaining,
        (SELECT COUNT(*) FROM transactions) AS transactions_remaining,
