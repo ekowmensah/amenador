@@ -117,7 +117,7 @@ class CashRegisterController extends Controller
         $initial_amount = $this->cashRegisterUtil->num_uf($request->input('amount'));
         $pos_settings = json_decode($request->session()->get('business.pos_settings', '{}'), true) ?: [];
         $configured_denominations = \App\Utils\CashDenominationUtil::byCode($pos_settings);
-        $opening_denominations = collect(\App\Utils\CashDenominationUtil::submittedRecords($pos_settings, $request->input('opening_denominations', [])))
+        $opening_denominations = collect(\App\Utils\CashDenominationUtil::submittedRecords($pos_settings, $request->input('opening_denominations') ?? []))
             ->mapWithKeys(fn ($item) => [$item['denomination_code'] => [
                 'code' => $item['denomination_code'], 'label' => $item['denomination_label'], 'value' => (float) $item['amount'],
                 'type' => $item['denomination_type'], 'count' => (int) $item['total_count'],
@@ -418,8 +418,8 @@ class CashRegisterController extends Controller
                 'total_card_slips' => 'required|integer|min:0',
                 'total_cheques' => 'required|integer|min:0',
                 'closing_note' => 'nullable|string|max:2000',
-                'denominations' => 'required|array',
-                'denominations.*' => 'required|integer|min:0|max:1000000',
+                'denominations' => 'nullable|array',
+                'denominations.*' => 'nullable|integer|min:0|max:1000000',
                 'payment_confirmations' => 'nullable|array',
                 'payment_confirmations.*' => 'required',
             ]);
@@ -446,16 +446,8 @@ class CashRegisterController extends Controller
                 ]);
             }
 
-            foreach ($allowed_denominations->keys() as $code) {
-                $count = $request->input('denominations.'.$code);
-                if ($count === null || $count === '') {
-                    throw \Illuminate\Validation\ValidationException::withMessages([
-                        'denominations.'.$code => 'Enter a count for every cash denomination. Use 0 when none is present.',
-                    ]);
-                }
-            }
-
-            $submitted_denominations = \App\Utils\CashDenominationUtil::submittedRecords($pos_settings, $request->input('denominations', []));
+            // Blank or omitted counts mean none of that denomination is in the drawer.
+            $submitted_denominations = \App\Utils\CashDenominationUtil::submittedRecords($pos_settings, $request->input('denominations') ?? []);
             if ($allowed_denominations->isNotEmpty()) {
                 $closing_amount = collect($submitted_denominations)->sum(fn ($item) => (float) $item['amount'] * (int) $item['total_count']);
             }

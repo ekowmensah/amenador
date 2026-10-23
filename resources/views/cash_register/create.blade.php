@@ -45,14 +45,14 @@
                     <label class="register-opening-cash-toggle"><input type="checkbox" name="has_opening_cash" value="1" checked><span><strong>Opening cash is present</strong><small>Turn this off when the drawer starts at zero.</small></span></label>
                     @if(!empty($cash_denominations))
                         <div class="register-open-field register-opening-count register-opening-cash-dependent">
-                            <label><span>Opening cash count</span><small>Count every note and coin in the drawer</small></label>
+                            <label><span>Opening cash count</span><small>Enter counts you have; leave unused denominations blank (0)</small></label>
                             <div class="register-opening-denominations">
                                 @foreach(['note' => 'Notes', 'coin' => 'Coins'] as $type => $groupLabel)
                                     @php $groupItems = collect($cash_denominations)->where('type', $type); @endphp
                                     @if($groupItems->isNotEmpty())
                                     <section><header><strong>{{ $groupLabel }}</strong><small>Count & subtotal</small></header>
                                         @foreach($groupItems as $item)
-                                            <div class="register-opening-denomination-row"><b>{{ $item['label'] }}</b><span>&times;</span><input type="number" class="form-control opening-denomination-input" name="opening_denominations[{{ $item['code'] }}]" value="0" min="0" max="1000000" step="1" inputmode="numeric" data-value="{{ $item['value'] }}"><span>=</span><strong data-opening-subtotal>0.00</strong></div>
+                                            <div class="register-opening-denomination-row"><b>{{ $item['label'] }}</b><span>&times;</span><input type="number" class="form-control opening-denomination-input" name="opening_denominations[{{ $item['code'] }}]" value="" placeholder="0" min="0" max="1000000" step="1" inputmode="numeric" data-value="{{ $item['value'] }}"><span>=</span><strong data-opening-subtotal>0.00</strong></div>
                                         @endforeach
                                     </section>
                                     @endif
@@ -125,7 +125,7 @@
     function toggleOpeningCash() {
         var enabled = form.find('[name="has_opening_cash"]').is(':checked:not(:disabled)');
         form.find('.register-opening-cash-dependent').toggle(enabled);
-        if (!enabled) { form.find('.opening-denomination-input').val(0); amount.val(formatInputNumber(0)); }
+        if (!enabled) { form.find('.opening-denomination-input').val(''); amount.val(formatInputNumber(0)); }
         updateOpeningCount();
     }
     amount.on('input change', updateOpeningPreview);

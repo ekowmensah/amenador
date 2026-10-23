@@ -35,7 +35,7 @@
                                     @if($values->isNotEmpty())
                                     <div class="close-denomination-group"><header><strong>{{ $group }}</strong><span>Count & subtotal</span></header>
                                         @foreach($values as $dnm)
-                                            <div class="pos-denomination-row close-denomination-row"><b>{{ $dnm['label'] }}</b><span>&times;</span>{!! Form::number("denominations[{$dnm['code']}]", null, ['class' => 'form-control cash_denomination', 'min' => 0, 'max' => 1000000, 'step' => 1, 'required' => true, 'data-denomination' => $dnm['value'], 'data-denomination-code' => $dnm['code'], 'inputmode' => 'numeric', 'aria-label' => $group.' '.$dnm['label'], 'placeholder' => '0']) !!}<span>=</span><strong class="denomination_subtotal">0.00</strong></div>
+                                            <div class="pos-denomination-row close-denomination-row"><b>{{ $dnm['label'] }}</b><span>&times;</span>{!! Form::number("denominations[{$dnm['code']}]", null, ['class' => 'form-control cash_denomination', 'min' => 0, 'max' => 1000000, 'step' => 1, 'data-denomination' => $dnm['value'], 'data-denomination-code' => $dnm['code'], 'inputmode' => 'numeric', 'aria-label' => $group.' '.$dnm['label'], 'placeholder' => '0']) !!}<span>=</span><strong class="denomination_subtotal">0.00</strong></div>
                                         @endforeach
                                     </div>
                                     @endif
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <footer class="close-register-footer"><span><i class="fas fa-info-circle"></i> Complete every denomination count and non-cash confirmation before closing.</span><div><button type="button" class="close-register-cancel" data-dismiss="modal">Cancel</button><button type="button" class="close-register-review" data-review-close @if($denominations->isEmpty()) disabled title="Configure cash denominations in Business Settings first" @endif><i class="fas fa-clipboard-check"></i> Review & Close</button></div></footer>
+    <footer class="close-register-footer"><span><i class="fas fa-info-circle"></i> Leave unused denominations blank (counts as 0). Complete all non-cash confirmations.</span><div><button type="button" class="close-register-cancel" data-dismiss="modal">Cancel</button><button type="button" class="close-register-review" data-review-close @if($denominations->isEmpty()) disabled title="Configure cash denominations in Business Settings first" @endif><i class="fas fa-clipboard-check"></i> Review & Close</button></div></footer>
 
     <div class="close-register-confirm" aria-hidden="true">
         <div>
