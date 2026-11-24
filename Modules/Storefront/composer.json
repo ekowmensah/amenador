@@ -1,0 +1,9 @@
+{
+    "name": "perrypos/storefront",
+    "description": "Standalone customer ordering module for UltimatePOS-compatible systems",
+    "type": "laravel-module",
+    "license": "MIT",
+    "require": {"php": "^8.0", "illuminate/support": "^9.0"},
+    "autoload": {"psr-4": {"Modules\\Storefront\\": ""}},
+    "extra": {"laravel": {"providers": ["Modules\\Storefront\\Providers\\StorefrontServiceProvider"]}}
+}

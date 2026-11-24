@@ -1,0 +1,37 @@
+/* Share the public/login palette while keeping the storefront's shopping controls. */
+:root{--bar-bg:#141210;--bar-panel:#201c18;--bar-gold:#d5ad73;--bar-cream:#f6efe4;--bar-muted:#b5aa9b}
+body.sf-themed{background:var(--bar-bg)!important}
+.sf-themed .pcp{--ink:var(--bar-cream);--muted:var(--bar-muted);--line:var(--public-border,#443a2c);--accent:var(--public-accent,var(--bar-gold));--purple:var(--accent);--surface:var(--bar-bg);--sf-card:var(--public-card,var(--bar-panel));--sf-soft:var(--public-soft,#2a251f);--sf-dark:var(--public-dark,#141210);--sf-button-text:#fff;background:var(--surface);color:var(--ink)}
+.sf-themed.public-layout-restaurant .pcp{--sf-button-text:#141210}
+.sf-themed :is(.pcp-header,.pcp-order,.pcp-product,.pcp-search,.pcp-sort select,.pcp-header-cart,.sf-panel,.pcp-quantity button,.pcp-skip){background:var(--sf-card);border-color:var(--line)!important;color:var(--ink)}
+.sf-themed :is(.pcp-brand-mark,.pcp-product-image,.pcp-order-footnote,.pcp-cart-item-image,.pcp-cart-empty-icon,.pcp-search kbd,.sf-summary-item img,.sf-receipt-status,.sf-tracking-badges>span,.sf-step-marker){background:var(--sf-soft);color:var(--ink);border-color:var(--line)}
+.sf-themed :is(.pcp-cart-item-image,.pcp-product-image img){mix-blend-mode:normal}
+.sf-themed :is(.pcp-eyebrow,.pcp-intro p,.pcp-benefits>span,.pcp-benefits svg,.pcp-product-count,.pcp-product-category,.pcp-order-top p,.pcp-cart-empty p,.pcp-totals-row,.pcp-safe-note,.pcp-order-footnote,.pcp-order-footnote strong,.pcp-footer,.sf-checkout-header>span,.sf-checkout-title p,.sf-panel>p,.sf-choice small,.sf-summary h2>span,.sf-summary-item small,.sf-summary-total,.sf-receipt-status p,.sf-receipt-reference,.sf-receipt-meta span,.sf-tracking-confirmation>span:first-child,.sf-tracking-confirmation small,.sf-tracking-steps li){color:var(--muted)}
+.sf-themed :is(.pcp-checkout-note,.sf-small,.sf-back){color:var(--muted)!important}
+.sf-themed :is(.pcp-totals-row strong,.sf-summary-total strong,.sf-grand-total,.sf-tracking-code,.sf-tracking-steps .sf-step-current,.sf-tracking-steps .sf-step-done){color:var(--ink)}
+.sf-themed :is(.pcp-order-top,.pcp-order-bottom,.pcp-cart-item,.sf-checkout-header,.sf-summary-item,.sf-grand-total,.sf-tracking-confirmation,.sf-tracking-bottom,.sf-receipt-status){border-color:var(--line)}
+.sf-themed :is(.pcp-search input,.pcp-options,.sf-fields input,.sf-fields textarea,.sf-label textarea){background:var(--sf-card);color:var(--ink);border-color:var(--line)}
+.sf-themed .pcp-search input::placeholder{color:var(--muted)}
+.sf-themed :is(.pcp-order-icon,.pcp-empty-art,.pcp-empty-art span,.pcp-order-top h2>span){background:var(--sf-soft);color:var(--accent)}
+.sf-themed .pcp-hero-label>span{background:var(--bar-gold)}
+.sf-themed .pcp-categories button{background:var(--sf-card);color:var(--ink);border-color:var(--line)}
+.sf-themed :is(.pcp-categories button.is-active,.pcp-add,.pcp-checkout,.pcp-mobile-cart,.pcp-hero-button,.pcp-header-cart b,.sf-submit){background:var(--accent)!important;color:var(--sf-button-text)!important}
+.sf-themed :is(.pcp-checkout,.pcp-hero-button,.sf-submit):hover{filter:brightness(.94)}
+.sf-themed .pcp-checkout.is-disabled{background:var(--sf-soft)!important;color:var(--muted)!important}
+.sf-themed :is(.sf-secondary,.sf-refresh){background:var(--sf-soft)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.sf-themed .sf-choice{border-color:var(--line)}
+.sf-themed .sf-choice:has(input:checked){background:var(--sf-soft);border-color:var(--accent)}
+.sf-themed .sf-choice input{accent-color:var(--accent)}
+.sf-themed .sf-tracking-steps li:after{background:var(--line)}
+.sf-themed .sf-step-current .sf-step-marker{background:var(--accent);color:var(--sf-button-text);box-shadow:0 0 0 5px var(--sf-soft)}
+.sf-themed .sf-step-done .sf-step-marker{background:var(--sf-soft);color:var(--accent)}
+.sf-themed .pcp-hero{background:var(--sf-dark)}
+.sf-themed .pcp-hero:after{background:linear-gradient(110deg,transparent,#ffffff09)}
+.sf-themed .pcp-hero h2{color:#fff;max-width:440px}
+.sf-themed .pcp-hero h2 em{color:var(--bar-gold);font-style:normal}
+.sf-themed .pcp-hero :is(p,.pcp-hero-label){color:#e5e9ed}
+.sf-themed .pcp-hero-art>img{transform:none;filter:none;width:100%;max-width:340px;max-height:300px}
+.sf-themed .pcp-orbit{border-color:#ffffff16}
+.sf-themed:not(.public-layout-restaurant) :is(.pcp-brand strong,.pcp-hero h2,.sf-checkout-header>a){font-family:Inter,"Segoe UI",Arial,sans-serif}
+.sf-themed.public-layout-restaurant :is(.pcp-intro h1,.pcp-section-heading h2,.sf-checkout-title h1){font-family:Georgia,serif;font-weight:400}
+@media(max-width:560px){.sf-themed .pcp-hero-copy{width:76%;padding:23px 20px}.sf-themed .pcp-hero h2{font-size:28px}.sf-themed .pcp-hero-art{right:-35px;opacity:.5}.sf-themed .pcp-hero-art>img{max-height:200px}}

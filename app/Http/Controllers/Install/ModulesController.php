@@ -45,6 +45,7 @@ class ModulesController extends Controller
         //print_r($modules);exit;
 
         foreach ($modules as $module => $details) {
+            $modules[$module]['is_enabled'] = Module::find($details['name'])->isEnabled();
             $modules[$module]['is_installed'] = $this->moduleUtil->isModuleInstalled($details['name']) ? true : false;
 
             //Get version information.
@@ -182,6 +183,14 @@ class ModulesController extends Controller
             //php artisan module:disable Blog
             if ($request->action_type == 'activate') {
                 $module->enable();
+                // Newly uploaded modules cannot register their installer while disabled.
+                // Drop cached routes so the next request can discover that installer.
+                Artisan::call('route:clear');
+                if ($request->boolean('install_after_activate')) {
+                    return redirect()->action([self::class, 'index'])->with('status', [
+                        'success' => true, 'msg' => 'Module enabled. Click Install to continue.',
+                    ]);
+                }
             } elseif ($request->action_type == 'deactivate') {
                 $module->disable();
             }

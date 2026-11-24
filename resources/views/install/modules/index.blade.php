@@ -72,6 +72,15 @@
                     <td>
                         <strong>{{$module['name']}}</strong> <br/>
                         @if(!$module['is_installed'])
+                            @if(empty($module['is_enabled']) || $module['install_link'] === '#')
+                                <form method="post" action="{{ action([\App\Http\Controllers\Install\ModulesController::class, 'update'], [$module['name']]) }}" style="display:inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="action_type" value="activate">
+                                    <input type="hidden" name="install_after_activate" value="1">
+                                    <button type="submit" class="tw-dw-btn tw-dw-btn-xs tw-dw-btn-outline tw-dw-btn-accent" @disabled($is_demo)>Enable for installation</button>
+                                </form>
+                            @else
                             <a class="tw-dw-btn tw-dw-btn-xs tw-dw-btn-outline  tw-dw-btn-accent" 
                             @if($is_demo)
                                 href="#"
@@ -81,6 +90,7 @@
                                 href="{{$module['install_link']}}"
                             @endif
                             > @lang('lang_v1.install')</a>
+                            @endif
                         @else
                             <a class="btn btn-warning btn-xs"
                                 @if($is_demo)
@@ -97,7 +107,7 @@
                             {{-- Commented Activate/Deactivate
                             @if($module['active'] == 1)
                                 <form 
-                                    action="{{action([\App\Http\Controllers\Install\ModulesController::class, 'update'], ['module_name' => $module['name']])}}" 
+                                    action="{{action([\App\Http\Controllers\Install\ModulesController::class, 'update'], [$module['name']])}}"
                                     style="display: inline;" 
                                     method="post">
                                     @method('PUT')
@@ -106,7 +116,7 @@
                                     <button class="btn btn-warning btn-xs">Deactivate</button>
                                 </form>
                             @else
-                                <form action="{{action([\App\Http\Controllers\Install\ModulesController::class, 'update'], ['module_name' => $module['name']])}}" 
+                                <form action="{{action([\App\Http\Controllers\Install\ModulesController::class, 'update'], [$module['name']])}}"
                                     style="display: inline;" 
                                     method="post"
                                 >
