@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Http\Controllers\Install\ModulesController;
 use App\Utils\ModuleUtil;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Mockery;
 use Tests\TestCase;
 
@@ -35,7 +34,9 @@ class ModuleInstallationTest extends TestCase
         $module = Mockery::mock();
         $module->shouldReceive('enable')->once();
         \Module::shouldReceive('find')->with('Storefront')->once()->andReturn($module);
-        Artisan::shouldReceive('call')->with('route:clear')->once()->andReturn(0);
+        $files = Mockery::mock(\Illuminate\Filesystem\Filesystem::class)->makePartial();
+        $files->shouldReceive('delete')->with(app()->getCachedRoutesPath())->once()->andReturn(true);
+        app()->instance('files', $files);
         $request = Request::create('/manage-modules/Storefront', 'PUT', ['action_type' => 'activate', 'install_after_activate' => 1]);
         $response = (new ModulesController($util))->update($request, 'Storefront');
         $this->assertSame(action([ModulesController::class, 'index']), $response->getTargetUrl());

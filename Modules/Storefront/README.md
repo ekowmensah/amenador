@@ -1,4 +1,4 @@
-# Storefront module 1.3.1
+# Storefront module 1.3.2
 
 A standalone customer shop and checkout inside the POS. It reads POS products,
 variations, product images, default selling prices and location stock directly.
@@ -90,6 +90,13 @@ and clears cached routes. Order/settings tables, payments and POS sales remain.
 Re-enable and install again to restore access; enable ordering explicitly in settings.
 Complete pending online payments before uninstalling because payment callbacks
 are unavailable while the module is disabled.
+
+The web installation and uninstallation paths run migrations and clear route
+cache directly through Laravel services. They do not require Artisan console
+output or PHP process functions such as `proc_open` and `proc_close`, which
+shared cPanel hosting may disable. The host Module Management activation handler
+must likewise clear routes with `app('files')->delete(app()->getCachedRoutesPath())`
+instead of calling `Artisan::call('route:clear')` (included in this repository).
 
 ## Delivery and currency
 
@@ -219,5 +226,5 @@ The browser smoke test uses this workspace's existing Playwright dependency and
 Chromium installation. It tests the page and checkout without submitting an order.
 Adapt its development host/browser paths if running elsewhere.
 
-The build command produces `storage/app/module-packages/Storefront-1.3.1.zip` with
+The build command produces `storage/app/module-packages/Storefront-1.3.2.zip` with
 portable ZIP entry paths and no `.env`, database dumps, customer files or credentials.

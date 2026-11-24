@@ -3,7 +3,6 @@
 namespace Modules\Storefront\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -23,8 +22,12 @@ class InstallController extends Controller
     public function install()
     {
         $this->authorize();
-        $status = Artisan::call('storefront:install', ['--business' => session('user.business_id') ?: session('business.id')]);
-        if ($status !== 0) { return back()->withErrors(['install' => Artisan::output()]); }
+        try {
+            app(\Modules\Storefront\Services\Installer::class)->install((int) (session('user.business_id') ?: session('business.id')));
+        } catch (\Throwable $error) {
+            report($error);
+            return back()->withErrors(['install' => 'Storefront installation failed. '.$error->getMessage()]);
+        }
         return redirect()->route('storefront.settings')->with('status', ['success' => 1, 'msg' => 'Storefront installed. Configure and enable your store below.']);
     }
 
@@ -51,7 +54,7 @@ class InstallController extends Controller
             report($error);
             return back()->withErrors(['uninstall' => 'Storefront could not be uninstalled. Check that modules_statuses.json is writable, then try again.']);
         }
-        Artisan::call('route:clear');
+        app('files')->delete(app()->getCachedRoutesPath());
         return redirect()->action([\App\Http\Controllers\Install\ModulesController::class, 'index'])
             ->with('status', ['success' => 1, 'msg' => 'Storefront uninstalled. Customer ordering is disabled. Orders, payments and POS sales have been retained.']);
     }

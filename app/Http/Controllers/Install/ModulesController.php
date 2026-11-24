@@ -185,7 +185,7 @@ class ModulesController extends Controller
                 $module->enable();
                 // Newly uploaded modules cannot register their installer while disabled.
                 // Drop cached routes so the next request can discover that installer.
-                Artisan::call('route:clear');
+                app('files')->delete(app()->getCachedRoutesPath());
                 if ($request->boolean('install_after_activate')) {
                     return redirect()->action([self::class, 'index'])->with('status', [
                         'success' => true, 'msg' => 'Module enabled. Click Install to continue.',

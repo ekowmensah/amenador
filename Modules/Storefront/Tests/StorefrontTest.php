@@ -30,6 +30,12 @@ class StorefrontTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->app->register(\Modules\Storefront\Providers\StorefrontServiceProvider::class);
+        if (! \Illuminate\Support\Facades\Route::has('storefront.index')) {
+            require __DIR__.'/../Routes/web.php';
+            app('router')->getRoutes()->refreshNameLookups();
+            app('router')->getRoutes()->refreshActionLookups();
+        }
         config(['database.default' => 'storefront_test', 'database.connections.storefront_test' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => ''], 'storefront.paystack_secret' => 'sk_test_fixture', 'storefront.paystack_webhook_secret' => '']);
         Schema::create('business', function (Blueprint $table) {
             $table->increments('id'); $table->string('name'); $table->integer('currency_id');
@@ -407,7 +413,9 @@ class StorefrontTest extends TestCase
         $module = Mockery::mock();
         $module->shouldReceive('disable')->once();
         \Module::shouldReceive('findOrFail')->with('Storefront')->once()->andReturn($module);
-        \Illuminate\Support\Facades\Artisan::shouldReceive('call')->with('route:clear')->once()->andReturn(0);
+        $files = Mockery::mock(\Illuminate\Filesystem\Filesystem::class)->makePartial();
+        $files->shouldReceive('delete')->with(app()->getCachedRoutesPath())->once()->andReturn(true);
+        app()->instance('files', $files);
         $controller = new \Modules\Storefront\Http\Controllers\InstallController();
         $this->assertSame('storefront::uninstall', $controller->uninstall()->name());
         $this->assertTrue($this->store->fresh()->enabled);
@@ -426,5 +434,32 @@ class StorefrontTest extends TestCase
         auth()->setUser($user);
         $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
         (new \Modules\Storefront\Http\Controllers\InstallController())->runUninstall();
+    }
+
+    public function test_installer_runs_module_migrations_without_console_and_preserves_existing_data(): void
+    {
+        Schema::drop('storefront_orders');
+        Schema::drop('storefront_settings');
+        $installer = app(\Modules\Storefront\Services\Installer::class);
+        $store = $installer->install(1);
+        $this->assertFalse($store->fresh()->enabled);
+        $this->assertTrue(Schema::hasColumn('storefront_orders', 'tracking_code'));
+        $this->assertSame(3, DB::table('migrations')->count());
+        $store->update(['name' => 'Preserved shop name', 'enabled' => true, 'enable_paystack' => true]);
+        $this->store = $store;
+        $order = $this->order();
+        $again = $installer->install(1);
+        $this->assertSame($store->id, $again->id);
+        $this->assertSame('Preserved shop name', $again->name);
+        $this->assertTrue($again->enabled);
+        $this->assertNotNull($order->fresh());
+        $this->assertSame(3, DB::table('migrations')->count());
+        $this->assertSame(config('storefront.module_version'), DB::table('system')->where('key', 'storefront_version')->value('value'));
+        $user = Mockery::mock(\App\User::class)->makePartial();
+        $user->shouldReceive('can')->with('superadmin')->andReturn(true);
+        auth()->setUser($user);
+        session(['user.business_id' => 1]);
+        $response = (new \Modules\Storefront\Http\Controllers\InstallController())->install();
+        $this->assertSame(route('storefront.settings'), $response->getTargetUrl());
     }
 }

@@ -4,7 +4,7 @@ if (PHP_SAPI !== 'cli') { http_response_code(404); exit; }
 $root = dirname(__DIR__, 2);
 $directory = $root.'/storage/app/module-packages';
 if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) { throw new RuntimeException('Could not create output directory.'); }
-$output = $directory.'/Storefront-1.3.1.zip';
+$output = $directory.'/Storefront-1.3.2.zip';
 $zip = new ZipArchive();
 if ($zip->open($output, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) { throw new RuntimeException('Could not create module ZIP.'); }
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__, FilesystemIterator::SKIP_DOTS)) as $file) {
