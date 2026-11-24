@@ -7,7 +7,7 @@ const {chromium} = require(path.resolve(__dirname, '../../../customer-display-ap
 (async () => {
     const root = path.resolve(__dirname, '../../..');
     // Render preview fixtures without enabling or changing a real store.
-    const php = String.raw`require 'vendor/autoload.php'; $app=require 'bootstrap/app.php'; $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap(); app('request')->setLaravelSession(app('session.store')); view()->composer('welcome', function($view){$view->with(['publicStoreUrl'=>url('/shop/example-shop'),'publicStoreDelivery'=>true]);}); $pages=[]; foreach(config('public_page_layouts') as $layout=>$preset){$pages[$layout]=view('welcome',['pageLayout'=>$layout,'pagePreset'=>$preset,'publicBusinessName'=>'Example Business'])->render();} echo json_encode($pages);`;
+    const php = String.raw`require 'vendor/autoload.php'; $app=require 'bootstrap/app.php'; $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap(); app('request')->setLaravelSession(app('session.store')); $app->register(Modules\Storefront\Providers\StorefrontServiceProvider::class); if(!Illuminate\Support\Facades\Route::has('storefront.asset')){require 'Modules/Storefront/Routes/web.php'; app('router')->getRoutes()->refreshNameLookups();} app()->instance(Modules\Storefront\Services\PublicStoreLink::class,new class extends Modules\Storefront\Services\PublicStoreLink {public function data():array{return ['publicStoreUrl'=>url('/shop/example-shop'),'publicStoreDelivery'=>true];}}); $middleware=new Modules\Storefront\Http\Middleware\HostIntegration(); $pages=[]; foreach(config('public_page_layouts') as $layout=>$preset){$pages[$layout]=$middleware->handle(Illuminate\Http\Request::create('/'),fn()=>response()->view('welcome',['pageLayout'=>$layout,'pagePreset'=>$preset,'publicBusinessName'=>'Example Business']))->getContent();} echo json_encode($pages);`;
     const fixtures = JSON.parse(execFileSync('C:/laragon/bin/php/php-8.3.30-Win32-vs16-x64/php.exe', ['-r', php], {cwd: root, encoding: 'utf8'}));
     const out = path.join(root, 'storage/app/storefront-preview/public-shop-link');
     fs.mkdirSync(out, {recursive: true});
@@ -24,6 +24,7 @@ const {chromium} = require(path.resolve(__dirname, '../../../customer-display-ap
                 return route.fulfill({path: path.join(root, 'public', directory, name)});
             });
         }
+        await page.route('http://perryposs.test/storefront-assets/**', route => route.fulfill({path: path.join(root, 'Modules/Storefront/Resources/assets', path.basename(new URL(route.request().url()).pathname))}));
         for (const [layout, html] of Object.entries(fixtures)) {
             const preview = 'http://perryposs.test/__homepage_preview/' + layout;
             await page.route(preview, route => route.fulfill({status: 200, contentType: 'text/html', body: html}));

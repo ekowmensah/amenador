@@ -244,7 +244,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Also upgrade installations still using a cached copy of the old module configuration.
+        if (config('modules.activator') === 'file'
+            && config('modules.activators.file.class') === \Nwidart\Modules\Activators\FileActivator::class) {
+            config(['modules.activators.file.class' => \App\Modules\StorageActivator::class]);
+        }
     }
 
     /**

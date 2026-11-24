@@ -18,7 +18,7 @@ class AdminController extends Controller
     protected function businessId(): int
     {
         $id = (int) (session('business.id') ?: session('user.business_id'));
-        abort_unless($id && (auth()->user()->can('superadmin') || auth()->user()->hasRole('Admin#'.$id) || auth()->user()->can('storefront.manage')), 403);
+        abort_unless($id && (auth()->user()->can('superadmin') || auth()->user()->can('manage_modules') || auth()->user()->hasRole('Admin#'.$id) || auth()->user()->can('storefront.manage')), 403);
         return $id;
     }
 

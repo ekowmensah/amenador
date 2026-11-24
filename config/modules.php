@@ -1,6 +1,6 @@
 <?php
 
-use Nwidart\Modules\Activators\FileActivator;
+use App\Modules\StorageActivator;
 use Nwidart\Modules\Commands;
 
 return [
@@ -266,7 +266,7 @@ return [
     */
     'activators' => [
         'file' => [
-            'class' => FileActivator::class,
+            'class' => StorageActivator::class,
             'statuses-file' => base_path('modules_statuses.json'),
             'cache-key' => 'activator.installed',
             'cache-lifetime' => 604800,

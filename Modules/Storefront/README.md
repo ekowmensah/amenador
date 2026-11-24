@@ -1,4 +1,4 @@
-# Storefront module 1.3.3
+# Storefront module 1.4.0
 
 A standalone customer shop and checkout inside the POS. It reads POS products,
 variations, product images, default selling prices and location stock directly.
@@ -26,12 +26,12 @@ Paid. Editing shipping never collects payment. Cancelled shipping displays an
 order cancellation and does not refund payments or reverse stock automatically.
 Use the existing POS returns and refund workflows for those operations.
 
-The module's model listeners provide shipping/payment synchronization on
-compatible hosts without editing their controllers. The sales invoice badges
-use the `sell_list_invoice_badges` ModuleUtil hook added to this repository's
-SellController invoice renderer, with `transactions.source` included in its
-query. On another host, add those two small integration points from this
-repository to show the badges; synchronization still works without that hook.
+The module registers its own response middleware and model listeners. It adds
+sales badges to the existing SellController DataTables response in one scoped
+query, and synchronizes shipping/payment through the POS models. It does not
+patch host controllers, templates, CSS, or the HTTP kernel. Existing invoice
+content, table counts and access checks are retained. Already present module
+badges are not duplicated.
 
 ## Requirements
 
@@ -56,41 +56,37 @@ favourites hero button, using the selected public/login palette. The module supp
 the URL for the business selected by `PUBLIC_CATALOG_BUSINESS_ID`, independently of
 staff sessions and `STOREFRONT_BUSINESS_ID`. Links appear only when that business's
 store is enabled and has an active matching location. Delivery copy is shown only
-when delivery is configured. Deploy the host changes in `resources/views/welcome.blade.php`
-and `public/css/public-page-layouts.css` along with the module for this integration.
+when delivery is configured. The module inserts these links into the existing
+public welcome layout and loads its own CSS. On other homepage templates it
+shows a compact Shop online panel. It leaves the underlying template unchanged;
+disabling the module removes the promotion. No host template edits are required.
 
 ## Install on another system
 
-1. Extract the ZIP so its `Storefront` directory is at `Modules/Storefront`.
-   Uploading through older Module Management pages only extracts the ZIP. If
-   clicking Install does nothing, the module is still disabled or routes are
-   cached. In cPanel Terminal, open the POS project root and run
-   `php artisan module:enable Storefront` and `php artisan route:clear`.
-   Refresh Module Management and click Install again. Without Terminal, add
-   `"Storefront": true` to the existing root `modules_statuses.json` object,
-   preserving every other entry. Cached routes still require `route:clear`.
-2. From the POS project root, run:
-
-   ```text
-   php artisan module:enable Storefront
-   php artisan storefront:install --business=1
-   php artisan route:clear
-   php artisan config:clear
-   ```
-
-   Use the correct business ID. The install command runs only this module's
-   migrations and is safe to repeat; it retains existing settings and orders.
-   If the host's autoloader requires regeneration, run `composer dump-autoload`.
-3. Log in as that business's administrator and open `/storefront/settings`.
-   The module also adds **Storefront** to the administrator sidebar.
+1. In **Module Management**, upload `Storefront-1.4.0.zip`. This POS release's
+   uploader extracts and enables the module and clears cached routes automatically.
+2. Click **Install**, then **Install / update Storefront**. The web installer runs
+   only this module's migrations and creates settings for the logged-in business.
+   Repeating installation preserves orders and existing settings.
+3. Open **Storefront settings**. The module also adds **Storefront** to the sidebar.
 4. Select the stock location, set the store URL/name, choose payment methods,
    and enable customer ordering. Grant `storefront.manage` to additional staff
    through the host's permissions UI if needed.
 5. Share the store's `/shop/{store-name}` URL. `/shop` redirects to the business
    selected by `STOREFRONT_BUSINESS_ID` (default: `1`). The host homepage is retained.
 
-The host Module Management install/update links also open the module's own
-installation screen. This distribution does not use a third-party license server.
+No Terminal, Composer installation, manual migrations, or host-page edits are
+needed on this POS release. The ZIP contains only the Storefront module, with no
+host replacements, environment files, database exports or development tests.
+
+Other Laravel/UltimatePOS-compatible releases still need their normal module
+activation mechanism. A disabled module cannot run its own provider or installer.
+Older uploaders that only extract files must enable the module through their
+module manager before Install is available. Automatic upload activation and
+Git-safe activation storage are host-platform features shipped with this POS
+release, not changes that a disabled ZIP can apply to an older host.
+
+This distribution does not use a third-party license server.
 Module Management can disable the module. Disable new ordering in settings first;
 financial records are retained. Do not roll back the schema to deactivate a live shop.
 
@@ -101,12 +97,21 @@ Re-enable and install again to restore access; enable ordering explicitly in set
 Complete pending online payments before uninstalling because payment callbacks
 are unavailable while the module is disabled.
 
-The web installation and uninstallation paths run migrations and clear route
-cache directly through Laravel services. They do not require Artisan console
-output or PHP process functions such as `proc_open` and `proc_close`, which
-shared cPanel hosting may disable. The host Module Management activation handler
-must likewise clear routes with `app('files')->delete(app()->getCachedRoutesPath())`
-instead of calling `Artisan::call('route:clear')` (included in this repository).
+The web installation, activation and uninstallation paths use Laravel services
+directly. They do not require Artisan console output or PHP process functions
+such as `proc_open` and `proc_close`, which shared cPanel hosting may disable.
+
+## Updates and activation state
+
+On the development/current system, deploy tracked module changes through Git.
+On systems where Storefront is installed separately, upload newer module ZIPs
+and click Update. Do not overlay ZIP files onto a Git-managed copy of this module.
+
+This POS release seeds `storage/app/modules_statuses.json` from the existing root
+`modules_statuses.json` once, preserving all module states. Subsequent activation
+changes write only to storage. Git deployments do not replace runtime activation
+settings. Back up this storage file along with the database and uploads. The
+root JSON remains a deployment seed and is not removed from Git.
 
 ## Delivery and currency
 
@@ -236,5 +241,5 @@ The browser smoke test uses this workspace's existing Playwright dependency and
 Chromium installation. It tests the page and checkout without submitting an order.
 Adapt its development host/browser paths if running elsewhere.
 
-The build command produces `storage/app/module-packages/Storefront-1.3.3.zip` with
+The build command produces `storage/app/module-packages/Storefront-1.4.0.zip` with
 portable ZIP entry paths and no `.env`, database dumps, customer files or credentials.

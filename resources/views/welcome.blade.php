@@ -14,11 +14,11 @@
 <div class="bar-wrap">
     <header class="bar-nav">
         <a class="bar-logo" href="{{ url('/') }}">{{ $publicBusinessName }}<small>{{ $pagePreset['name'] }}</small></a>
-        <nav class="bar-nav-links" aria-label="Main navigation"><a href="#experience">About us</a><a href="#discover">{{ $pagePreset['nav'] }}</a>@if(!empty($publicStoreUrl))<a class="bar-button public-shop-nav" href="{{ $publicStoreUrl }}">Shop online &rarr;</a>@endif<a class="bar-button outline" href="{{ route('login') }}">Staff sign in &rarr;</a></nav>
+        <nav class="bar-nav-links" aria-label="Main navigation"><a href="#experience">About us</a><a href="#discover">{{ $pagePreset['nav'] }}</a><a class="bar-button outline" href="{{ route('login') }}">Staff sign in &rarr;</a></nav>
     </header>
     <main id="main">
         <section class="bar-hero">
-            <div><span class="bar-eyebrow">{{ $pagePreset['eyebrow'] }}</span><h1>{{ $pagePreset['title'] }}<br><em>{{ $pagePreset['emphasis'] }}</em></h1><p class="bar-lead">{{ $pagePreset['lead'] }}</p><div class="bar-actions">@if(!empty($publicStoreUrl))<a class="bar-button public-shop-hero" href="{{ $publicStoreUrl }}">Shop your favourites &rarr;</a><a class="bar-button outline" href="#discover">{{ $pagePreset['primary'] }}</a>@else<a class="bar-button" href="#discover">{{ $pagePreset['primary'] }} &rarr;</a><a class="bar-button outline" href="#experience">{{ $pagePreset['secondary'] }}</a>@endif</div>@if(!empty($publicStoreUrl))<p class="public-shop-note">Good finds. Easy ordering. <span>Browse, add to cart, and checkout for {{ !empty($publicStoreDelivery) ? 'pickup or delivery' : 'store pickup' }}.</span></p>@endif</div>
+            <div><span class="bar-eyebrow">{{ $pagePreset['eyebrow'] }}</span><h1>{{ $pagePreset['title'] }}<br><em>{{ $pagePreset['emphasis'] }}</em></h1><p class="bar-lead">{{ $pagePreset['lead'] }}</p><div class="bar-actions"><a class="bar-button" href="#discover">{{ $pagePreset['primary'] }} &rarr;</a><a class="bar-button outline" href="#experience">{{ $pagePreset['secondary'] }}</a></div></div>
             <div class="bar-art"><img src="{{ asset('img/'.$pagePreset['image']) }}" alt="{{ $pagePreset['alt'] }}"><span class="bar-art-caption">{{ $pagePreset['caption'] }}</span></div>
         </section>
         <div class="bar-strip">@foreach ($pagePreset['highlights'] as $highlight)<span>{{ $highlight }}</span>@endforeach</div>

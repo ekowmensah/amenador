@@ -32,7 +32,7 @@ class DataController
     public function modifyAdminMenu()
     {
         $businessId = (int) (session('business.id') ?: session('user.business_id'));
-        if (auth()->check() && (auth()->user()->can('superadmin') || auth()->user()->hasRole('Admin#'.$businessId) || auth()->user()->can('storefront.manage'))) {
+        if (auth()->check() && (auth()->user()->can('superadmin') || auth()->user()->can('manage_modules') || auth()->user()->hasRole('Admin#'.$businessId) || auth()->user()->can('storefront.manage'))) {
             \Menu::modify('admin-sidebar-menu', function ($menu) {
                 $menu->url(route('storefront.orders'), 'Storefront', ['icon' => 'fa fa-shopping-bag', 'active' => request()->segment(1) === 'storefront'])->order(89);
             });

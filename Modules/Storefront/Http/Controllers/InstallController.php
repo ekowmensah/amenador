@@ -52,7 +52,7 @@ class InstallController extends Controller
             });
         } catch (\Throwable $error) {
             report($error);
-            return back()->withErrors(['uninstall' => 'Storefront could not be uninstalled. Check that modules_statuses.json is writable, then try again.']);
+            return back()->withErrors(['uninstall' => 'Storefront could not be uninstalled. Check that module activation storage is writable, then try again.']);
         }
         app('files')->delete(app()->getCachedRoutesPath());
         return redirect()->action([\App\Http\Controllers\Install\ModulesController::class, 'index'])

@@ -97,7 +97,6 @@ class SellController extends Controller
             $only_pending_shipments = request()->input('only_pending_shipments') === 'true';
 
             $sells = $this->transactionUtil->getListSells($business_id, $sale_type);
-            $sells->addSelect('transactions.source');
 
             // Apply the report scope only when this shared endpoint is called
             // by a report. The normal sales list keeps its existing behavior.
@@ -569,9 +568,6 @@ class SellController extends Controller
                         $invoice_no .= ' &nbsp;<small class="label bg-yellow label-round no-print" title="'.__('crm::lang.order_request').'"><i class="fas fa-tasks"></i></small>';
                     }
 
-                    foreach (app(\App\Utils\ModuleUtil::class)->getModuleData('sell_list_invoice_badges', ['transaction' => $row]) as $badge) {
-                        $invoice_no .= $badge;
-                    }
                     return $invoice_no;
                 })
                 ->editColumn('shipping_status', function ($row) use ($shipping_statuses) {

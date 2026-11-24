@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Utils\ModuleUtil;
 use Illuminate\Http\Request;
 use Module;
-use ZipArchive;
 use Illuminate\Support\Facades\Artisan;
 
 class ModulesController extends Controller
@@ -249,6 +248,7 @@ class ModulesController extends Controller
      */
     public function uploadModule(Request $request)
     {
+        abort_unless(auth()->user()->can('manage_modules'), 403);
         $notAllowed = $this->moduleUtil->notAllowedInDemo();
         if (! empty($notAllowed)) {
             return $notAllowed;
@@ -256,47 +256,15 @@ class ModulesController extends Controller
 
         try {
 
-            //get zipped file
-            $module = $request->file('module');
-            $module_name = $module->getClientOriginalName();
-            $module_name = str_replace('.zip', '', $module_name);
-
-            //check if uploaded file is valid or not and and if not redirect back
-            if ($module->getMimeType() != 'application/zip') {
-                $output = ['success' => false,
-                    'msg' => __('lang_v1.pls_upload_valid_zip_file'),
-                ];
-
-                return redirect()->back()->with(['status' => $output]);
-            }
-
-            //check if 'Modules' folder exist or not, if not exist create
-            $path = '../Modules';
-            if (! is_dir($path)) {
-                mkdir($path, 0777, true);
-            }
-
-            //extract the zipped file in given path
-            $zip = new ZipArchive();
-            if ($zip->open($module) === true) {
-                $zip->extractTo($path.'/');
-                $zip->close();
-
-                //Needs improvement
-
-                // if(!(file_exists($path . '/' . $module_name . '/composer.json')
-                //     && file_exists($path . '/' . $module_name . '/module.json')
-                //     && file_exists($path . '/' . $module_name . '/Config/config.php'))){
-                //         \File::deleteDirectory($path . '/' . $module_name);
-                // }
-            }
+            $request->validate(['module' => 'required|file|mimes:zip']);
+            $name = app(\App\Services\ModuleArchiveInstaller::class)->install($request->file('module')->getRealPath());
 
             $output = ['success' => true,
-                'msg' => __('lang_v1.success'),
+                'msg' => $name.' uploaded and enabled. Click Install or Update to finish setup.',
             ];
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $output = ['success' => false,
-                'msg' => __('messages.something_went_wrong'),
+                'msg' => $e->getMessage(),
             ];
         }
 

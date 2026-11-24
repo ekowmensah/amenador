@@ -69,8 +69,3 @@
 .public-layout-general .bar-art { border-radius:32px; }
 .public-layout-hardware .modern-login-eyebrow,.public-layout-hardware .modern-login-points,.public-layout-hardware .mart-preview-icon,.public-layout-hardware .modern-login-footnote a { color:#f1c48d; }
 .public-layout-general .modern-login-eyebrow,.public-layout-general .modern-login-points,.public-layout-general .mart-preview-icon,.public-layout-general .modern-login-footnote a { color:#c8dcf5; }
-.bar-nav-links .public-shop-nav{background:var(--bar-gold);color:var(--bar-bg);font-weight:700;white-space:nowrap}
-:is(.public-layout-pharmacy,.public-layout-supermarket,.public-layout-general,.public-layout-hardware) .bar-nav-links .public-shop-nav{color:#fff}
-.public-shop-note{color:var(--bar-gold);font-size:13px;line-height:1.7;margin:20px 0 0}
-.public-shop-note span{display:block;color:var(--bar-muted);font-size:12px}
-@media(max-width:600px){.bar-nav{flex-wrap:wrap;gap:18px}.bar-nav-links{flex-wrap:wrap;gap:12px}.bar-nav-links .public-shop-nav{display:inline-flex}.public-shop-note{max-width:34ch}}

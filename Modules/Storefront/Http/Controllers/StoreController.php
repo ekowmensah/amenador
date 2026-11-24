@@ -18,7 +18,7 @@ class StoreController extends Controller
     public function asset(string $file)
     {
         $art = ['general-goods-display.svg', 'hardware-display.svg', 'bar-cocktail.svg', 'pharmacy-display.svg', 'supermarket-display.svg'];
-        abort_unless(in_array($file, array_merge($art, ['store.css', 'store.js', 'checkout.css', 'checkout.js', 'tracking.js', 'appearance.css', 'public-presets.css'])), 404);
+        abort_unless(in_array($file, array_merge($art, ['store.css', 'store.js', 'checkout.css', 'checkout.js', 'tracking.js', 'appearance.css', 'public-presets.css', 'homepage.css'])), 404);
         return response()->file(__DIR__.'/../../Resources/assets/'.(in_array($file, $art) ? 'art/' : '').$file, [
             'Content-Type' => in_array($file, $art) ? 'image/svg+xml' : (str_ends_with($file, '.css') ? 'text/css; charset=utf-8' : 'application/javascript; charset=utf-8'),
             'Cache-Control' => 'public, max-age=3600',

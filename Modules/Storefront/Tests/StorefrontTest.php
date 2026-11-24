@@ -469,7 +469,8 @@ class StorefrontTest extends TestCase
         session(['business.id' => 999]);
         $url = route('storefront.index', $this->store);
         foreach (config('public_page_layouts') as $layout => $preset) {
-            $html = view('welcome', ['pageLayout' => $layout, 'pagePreset' => $preset, 'publicBusinessName' => 'Test shop'])->render();
+            $request = \Illuminate\Http\Request::create('/');
+            $html = (new \Modules\Storefront\Http\Middleware\HostIntegration())->handle($request, fn () => response()->view('welcome', ['pageLayout' => $layout, 'pagePreset' => $preset, 'publicBusinessName' => 'Test shop']))->getContent();
             $this->assertStringContainsString('href="'.$url.'">Shop online', $html);
             $this->assertStringContainsString('href="'.$url.'">Shop your favourites', $html);
             $this->assertStringContainsString('checkout for store pickup', $html);
@@ -492,5 +493,44 @@ class StorefrontTest extends TestCase
         $this->assertNull($service->data()['publicStoreUrl']);
         Schema::drop('storefront_settings');
         $this->assertNull($service->data()['publicStoreUrl']);
+    }
+
+    public function test_homepage_integration_supports_other_templates_and_does_not_duplicate_links(): void
+    {
+        config(['constants.public_catalog_business_id' => $this->store->business_id]);
+        $middleware = new \Modules\Storefront\Http\Middleware\HostIntegration();
+        $request = \Illuminate\Http\Request::create('/');
+        $response = $middleware->handle($request, fn () => response('<html><head></head><body><h1>Original custom homepage</h1></body></html>'));
+        $this->assertStringContainsString('Original custom homepage', $response->getContent());
+        $this->assertStringContainsString('data-storefront-promo="floating"', $response->getContent());
+        $this->assertStringContainsString('homepage.css', $response->getContent());
+        $again = $middleware->handle($request, fn () => $response);
+        $this->assertSame(1, substr_count($again->getContent(), 'data-storefront-promo="floating"'));
+        $other = $middleware->handle(\Illuminate\Http\Request::create('/login'), fn () => response('<html><body>Login</body></html>'));
+        $this->assertStringNotContainsString('data-storefront-promo', $other->getContent());
+    }
+
+    public function test_sales_integration_adds_badges_without_host_hooks_and_keeps_other_tenants_private(): void
+    {
+        $order = $this->order();
+        $order->update(['transaction_id' => 321, 'status' => 'placed', 'payment_method' => 'cash']);
+        $request = \Illuminate\Http\Request::create('/sells');
+        $request->setLaravelSession(app('session.store'));
+        $route = new \Illuminate\Routing\Route('GET', 'sells', ['uses' => '\\App\\Http\\Controllers\\SellController@index', 'controller' => '\\App\\Http\\Controllers\\SellController@index']);
+        $request->setRouteResolver(fn () => $route);
+        $payload = ['draw' => 2, 'recordsTotal' => 2, 'recordsFiltered' => 2,
+            'data' => [['id' => 321, 'invoice_no' => 'INV-321'], ['id' => 999, 'invoice_no' => 'INV-999']]];
+        $middleware = new \Modules\Storefront\Http\Middleware\HostIntegration();
+        session(['business.id' => $order->business_id]);
+        $response = $middleware->handle($request, fn () => response()->json($payload));
+        $result = $response->getData(true);
+        $this->assertSame(2, $result['draw']);
+        $this->assertStringContainsString($order->tracking_code, $result['data'][0]['invoice_no']);
+        $this->assertSame('INV-999', $result['data'][1]['invoice_no']);
+        $again = $middleware->handle($request, fn () => $response)->getData(true);
+        $this->assertSame(1, substr_count($again['data'][0]['invoice_no'], 'data-storefront-order'));
+        session(['business.id' => 999]);
+        $private = $middleware->handle($request, fn () => response()->json($payload))->getData(true);
+        $this->assertSame('INV-321', $private['data'][0]['invoice_no']);
     }
 }

@@ -6,6 +6,12 @@ require __DIR__.'/../../../vendor/autoload.php';
 $app = require __DIR__.'/../../../bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 app('request')->setLaravelSession(app('session.store'));
+$app->register(\Modules\Storefront\Providers\StorefrontServiceProvider::class);
+if (! \Illuminate\Support\Facades\Route::has('storefront.index')) {
+    require __DIR__.'/../Routes/web.php';
+    app('router')->getRoutes()->refreshNameLookups();
+    app('router')->getRoutes()->refreshActionLookups();
+}
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
