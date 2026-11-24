@@ -465,6 +465,7 @@ class StorefrontTest extends TestCase
 
     public function test_public_homepage_promotes_the_matching_store_across_all_layouts(): void
     {
+        $this->assertTrue(app(\Illuminate\Contracts\Http\Kernel::class)->hasMiddleware(\Modules\Storefront\Http\Middleware\HostIntegration::class));
         config(['constants.public_catalog_business_id' => $this->store->business_id, 'storefront.default_business_id' => 999]);
         session(['business.id' => 999]);
         $url = route('storefront.index', $this->store);
