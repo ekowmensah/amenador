@@ -1,4 +1,4 @@
-# Storefront module 1.4.0
+# Storefront module 1.4.1
 
 A standalone customer shop and checkout inside the POS. It reads POS products,
 variations, product images, default selling prices and location stock directly.
@@ -33,6 +33,14 @@ patch host controllers, templates, CSS, or the HTTP kernel. Existing invoice
 content, table counts and access checks are retained. Already present module
 badges are not duplicated.
 
+Deleting a linked POS sale cancels and archives its storefront order. It is removed
+from Active orders and retained under Deleted sales with its original payment
+information. Customer tracking and the receipt show cancellation; fulfilment edits,
+new payment prompts and automatic sale recreation are blocked. This does not issue
+a gateway refund. The upgrade migration also archives orders whose sales were
+already deleted, and missing links are reconciled after deletions made while the
+module was disabled. Pending orders with no sale yet remain active.
+
 ## Requirements
 
 - An UltimatePOS-compatible host with Laravel 9, PHP 8+, the existing `App` POS
@@ -63,7 +71,7 @@ disabling the module removes the promotion. No host template edits are required.
 
 ## Install on another system
 
-1. In **Module Management**, upload `Storefront-1.4.0.zip`. This POS release's
+1. In **Module Management**, upload `Storefront-1.4.1.zip`. This POS release's
    uploader extracts and enables the module and clears cached routes automatically.
 2. Click **Install**, then **Install / update Storefront**. The web installer runs
    only this module's migrations and creates settings for the logged-in business.
@@ -241,5 +249,5 @@ The browser smoke test uses this workspace's existing Playwright dependency and
 Chromium installation. It tests the page and checkout without submitting an order.
 Adapt its development host/browser paths if running elsewhere.
 
-The build command produces `storage/app/module-packages/Storefront-1.4.0.zip` with
+The build command produces `storage/app/module-packages/Storefront-1.4.1.zip` with
 portable ZIP entry paths and no `.env`, database dumps, customer files or credentials.

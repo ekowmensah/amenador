@@ -26,6 +26,6 @@ class StoreOrder extends Model
 
     protected $table = 'storefront_orders';
     protected $guarded = ['id'];
-    protected $casts = ['customer' => 'array', 'items' => 'array', 'verified_at' => 'datetime'];
+    protected $casts = ['customer' => 'array', 'items' => 'array', 'verified_at' => 'datetime', 'sale_deleted_at' => 'datetime'];
     protected $hidden = ['customer', 'notes', 'checkout_key', 'authorization_url'];
 }

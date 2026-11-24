@@ -23,6 +23,7 @@ class Tracking
 
     public function status(StoreOrder $order): array
     {
+        app(SaleSync::class)->refreshDeletion($order);
         $delivery = $order->fulfilment === 'delivery';
         $labels = ['received' => 'Order received', 'preparing' => 'Preparing your order',
             'ready' => $delivery ? 'Ready for dispatch' : 'Ready for pickup'];
@@ -58,7 +59,7 @@ class Tracking
             unset($step);
         }
         return ['code' => $order->tracking_code ?: $order->reference, 'heading' => $heading,
-            'description' => $description, 'payment' => in_array($order->status, ['paid', 'paid_review']) ? 'Paid' : ($order->payment_method === 'cash' ? 'Payment due on '.$order->fulfilment : 'Awaiting payment'),
+            'description' => $description, 'payment' => in_array($order->status, ['paid', 'paid_review']) ? 'Paid' : ($order->sale_deleted_at ? 'Order cancelled' : ($order->payment_method === 'cash' ? 'Payment due on '.$order->fulfilment : 'Awaiting payment')),
             'fulfilment' => $delivery ? 'Delivery' : 'Store pickup', 'steps' => $steps,
             'updated' => $order->updated_at->toIso8601String()];
     }

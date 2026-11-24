@@ -76,6 +76,7 @@ class StorefrontTest extends TestCase
         });
         (require __DIR__.'/../Database/Migrations/2026_11_24_100000_create_storefront_tables.php')->up();
         (require __DIR__.'/../Database/Migrations/2026_11_24_110000_add_storefront_tracking_codes.php')->up();
+        (require __DIR__.'/../Database/Migrations/2026_11_24_130000_track_deleted_storefront_sales.php')->up();
         DB::table('currencies')->insert(['id' => 1, 'code' => 'GHS', 'symbol' => 'GHS']);
         $business = Business::create(['name' => 'Test shop', 'currency_id' => 1]);
         $location = BusinessLocation::create(['business_id' => $business->id, 'name' => 'Store', 'is_active' => 1]);
@@ -312,7 +313,8 @@ class StorefrontTest extends TestCase
         $this->getJson($url)->assertStatus(401);
         $this->post(route('storefront.track.lookup', $this->store), ['code' => $order->tracking_code, 'phone' => '0240000000'])->assertRedirect(route('storefront.track', $this->store));
         $this->getJson($url)->assertOk()->assertJsonPath('heading', 'Awaiting payment');
-        $order->update(['transaction_id' => 123, 'status' => 'placed', 'fulfilment_status' => 'preparing']);
+        $sale = \App\Transaction::create(['business_id' => $order->business_id, 'source' => 'storefront']);
+        $order->update(['transaction_id' => $sale->id, 'status' => 'placed', 'fulfilment_status' => 'preparing']);
         $response = $this->getJson($url)->assertOk()->assertJsonPath('heading', 'Preparing your order');
         foreach (['customer', 'phone', 'email', 'address', 'items', 'token'] as $field) { $this->assertArrayNotHasKey($field, $response->json()); }
         $this->withSession(['storefront.tracking.'.$this->store->id => ['id' => $order->id, 'expires' => time() - 10]])->getJson($url)->assertStatus(401);
@@ -321,7 +323,8 @@ class StorefrontTest extends TestCase
     public function test_pickup_and_delivery_tracking_have_distinct_completion_steps(): void
     {
         $order = $this->order();
-        $order->transaction_id = 123;
+        $sale = \App\Transaction::create(['business_id' => $order->business_id, 'source' => 'storefront']);
+        $order->transaction_id = $sale->id;
         $order->status = 'paid';
         $order->fulfilment_status = 'completed';
         $tracking = new \Modules\Storefront\Services\Tracking();
@@ -444,7 +447,7 @@ class StorefrontTest extends TestCase
         $store = $installer->install(1);
         $this->assertFalse($store->fresh()->enabled);
         $this->assertTrue(Schema::hasColumn('storefront_orders', 'tracking_code'));
-        $this->assertSame(3, DB::table('migrations')->count());
+        $this->assertSame(4, DB::table('migrations')->count());
         $store->update(['name' => 'Preserved shop name', 'enabled' => true, 'enable_paystack' => true]);
         $this->store = $store;
         $order = $this->order();
@@ -453,7 +456,7 @@ class StorefrontTest extends TestCase
         $this->assertSame('Preserved shop name', $again->name);
         $this->assertTrue($again->enabled);
         $this->assertNotNull($order->fresh());
-        $this->assertSame(3, DB::table('migrations')->count());
+        $this->assertSame(4, DB::table('migrations')->count());
         $this->assertSame(config('storefront.module_version'), DB::table('system')->where('key', 'storefront_version')->value('value'));
         $user = Mockery::mock(\App\User::class)->makePartial();
         $user->shouldReceive('can')->with('superadmin')->andReturn(true);
@@ -533,5 +536,90 @@ class StorefrontTest extends TestCase
         session(['business.id' => 999]);
         $private = $middleware->handle($request, fn () => response()->json($payload))->getData(true);
         $this->assertSame('INV-321', $private['data'][0]['invoice_no']);
+    }
+
+    public function test_deleted_sale_is_archived_cancelled_and_never_recreated_or_reported_as_refunded(): void
+    {
+        $order = $this->order();
+        $pending = $this->order();
+        $sale = \App\Transaction::create(['business_id' => $order->business_id, 'source' => 'storefront', 'payment_status' => 'paid']);
+        $order->update(['transaction_id' => $sale->id, 'status' => 'paid', 'verified_at' => now(), 'provider_transaction_id' => 'retained-payment']);
+        $sale->delete();
+        $order->refresh();
+        $this->assertNotNull($order->sale_deleted_at);
+        $this->assertSame('cancelled', $order->fulfilment_status);
+        $this->assertSame('paid', $order->status);
+        $this->assertSame('retained-payment', $order->provider_transaction_id);
+        $this->assertSame($sale->id, $order->transaction_id);
+        $progress = app(\Modules\Storefront\Services\Tracking::class)->status($order);
+        $this->assertSame('Order cancelled', $progress['heading']);
+        $this->assertSame('Paid', $progress['payment']);
+        app(Checkout::class)->confirm($order);
+        app(Checkout::class)->fulfilPaid($order);
+        $this->assertSame(0, \App\Transaction::count());
+        $html = view('storefront::order', ['store' => $this->store, 'order' => $order, 'catalog' => app(Catalog::class)])->render();
+        $this->assertStringContainsString('Your order has been cancelled.', $html);
+        $this->assertStringNotContainsString('can begin preparing', $html);
+        $user = Mockery::mock(\App\User::class)->makePartial();
+        $user->shouldReceive('can')->with('superadmin')->andReturn(true);
+        auth()->setUser($user);
+        session(['business.id' => $order->business_id]);
+        $controller = new \Modules\Storefront\Http\Controllers\AdminController();
+        $active = $controller->orders(app(Catalog::class), \Illuminate\Http\Request::create('/storefront/orders'))->getData();
+        $this->assertSame([$pending->id], $active['orders']->pluck('id')->all());
+        $archive = $controller->orders(app(Catalog::class), \Illuminate\Http\Request::create('/storefront/orders?view=deleted'))->getData();
+        $this->assertSame([$order->id], $archive['orders']->pluck('id')->all());
+        $template = str_replace("@extends('layouts.app')", '', file_get_contents(__DIR__.'/../Resources/views/orders.blade.php'));
+        $archiveHtml = \Illuminate\Support\Facades\Blade::render($template."\n@yield('content')", $archive);
+        $this->assertStringContainsString('Cancelled', $archiveHtml);
+        $this->assertStringNotContainsString('name="fulfilment_status"', $archiveHtml);
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
+        $controller->updateOrder(\Illuminate\Http\Request::create('/storefront/orders/'.$order->id, 'POST', ['fulfilment_status' => 'ready']), $order->id, app(Checkout::class));
+    }
+
+    public function test_old_missing_sales_are_reconciled_per_business_and_tracking_stops_requesting_cash(): void
+    {
+        $order = $this->order();
+        $other = $this->order();
+        $order->update(['transaction_id' => 444, 'payment_method' => 'cash', 'status' => 'placed']);
+        $other->update(['business_id' => 999, 'transaction_id' => 555]);
+        app(\Modules\Storefront\Services\SaleSync::class)->reconcileDeletedSales($order->business_id);
+        $this->assertNotNull($order->fresh()->sale_deleted_at);
+        $this->assertNull($other->fresh()->sale_deleted_at);
+        $progress = app(\Modules\Storefront\Services\Tracking::class)->status($order->fresh());
+        $this->assertSame('Order cancelled', $progress['payment']);
+        $this->assertSame('Order cancelled', $progress['heading']);
+        $this->assertNotNull($other->fresh());
+    }
+
+    public function test_rolling_back_sale_deletion_restores_the_order_and_sale_together(): void
+    {
+        $order = $this->order();
+        $sale = \App\Transaction::create(['business_id' => $order->business_id, 'source' => 'storefront']);
+        $order->update(['transaction_id' => $sale->id, 'status' => 'placed']);
+        DB::beginTransaction();
+        $sale->delete();
+        $this->assertNotNull($order->fresh()->sale_deleted_at);
+        DB::rollBack();
+        $this->assertNotNull(\App\Transaction::find($sale->id));
+        $this->assertNull($order->fresh()->sale_deleted_at);
+        $this->assertSame('received', $order->fresh()->fulfilment_status);
+    }
+
+    public function test_deletion_migration_backfills_old_orders_but_keeps_pending_and_existing_sales(): void
+    {
+        $missing = $this->order();
+        $valid = $this->order();
+        $pending = $this->order();
+        $sale = \App\Transaction::create(['business_id' => $valid->business_id, 'source' => 'storefront']);
+        $missing->update(['transaction_id' => 444]);
+        $valid->update(['transaction_id' => $sale->id]);
+        $migration = require __DIR__.'/../Database/Migrations/2026_11_24_130000_track_deleted_storefront_sales.php';
+        $migration->down();
+        $migration->up();
+        $this->assertNotNull($missing->fresh()->sale_deleted_at);
+        $this->assertSame('cancelled', $missing->fresh()->fulfilment_status);
+        $this->assertNull($valid->fresh()->sale_deleted_at);
+        $this->assertNull($pending->fresh()->sale_deleted_at);
     }
 }

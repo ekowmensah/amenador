@@ -1,7 +1,7 @@
 {
     "name": "Storefront",
     "alias": "storefront",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Customer storefront, direct checkout and Paystack payments for the POS.",
     "keywords": ["storefront", "checkout", "paystack"],
     "priority": 0,

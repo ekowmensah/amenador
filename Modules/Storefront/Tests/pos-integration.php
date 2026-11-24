@@ -71,6 +71,21 @@ try {
     if ($delivery->fresh()->status !== 'paid') { throw new RuntimeException('POS cash collection did not update storefront payment.'); }
     echo "PASS: sales shipping, order shipping, and real cash payment collection synchronization.\n";
     if (abs((float) $stockQuery->value('qty_available') - ($before - 3)) > 0.001) { throw new RuntimeException('Stock was not deducted exactly once per order.'); }
+    auth()->setUser(App\User::findOrFail($store->business->owner_id));
+    $deleted = app(App\Utils\TransactionUtil::class)->deleteSale($store->business_id, $cash->transaction_id);
+    if (empty($deleted['success']) || ! $cash->fresh()->sale_deleted_at || $cash->fresh()->fulfilment_status !== 'cancelled') {
+        throw new RuntimeException('Deleting a real POS sale did not archive and cancel its storefront order.');
+    }
+    if (abs((float) $stockQuery->value('qty_available') - ($before - 2)) > 0.001) {
+        throw new RuntimeException('POS deletion did not restore stock exactly once.');
+    }
+    echo "PASS: normal POS sale deletion archives the storefront order and restores stock.\n";
+    $deletedPaid = app(App\Utils\TransactionUtil::class)->deleteSale($store->business_id, $online->transaction_id);
+    if (empty($deletedPaid['success']) || ! $online->fresh()->sale_deleted_at || $online->fresh()->status !== 'paid' || ! $online->fresh()->verified_at) {
+        throw new RuntimeException('Paid sale deletion did not retain the verified storefront payment record.');
+    }
+    if (abs((float) $stockQuery->value('qty_available') - ($before - 1)) > 0.001) { throw new RuntimeException('Paid sale deletion did not restore stock exactly once.'); }
+    echo "PASS: paid sale deletion retains the original verified payment information.\n";
     echo "PASS: real POS cash sale, verified online sale, payment line, duplicate confirmation, delivery fee, stock deduction.\n";
 } catch (Throwable $error) {
     $failed = true;

@@ -19,6 +19,9 @@ class StorefrontServiceProvider extends ServiceProvider
         \App\Transaction::updated(function ($sale) {
             app(\Modules\Storefront\Services\SaleSync::class)->fromSale($sale);
         });
+        \App\Transaction::deleted(function ($sale) {
+            app(\Modules\Storefront\Services\SaleSync::class)->saleDeleted($sale);
+        });
         \Modules\Storefront\Entities\StoreOrder::updated(function ($order) {
             app(\Modules\Storefront\Services\SaleSync::class)->fromOrder($order);
         });

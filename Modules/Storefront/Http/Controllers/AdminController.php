@@ -54,17 +54,23 @@ class AdminController extends Controller
         return back()->with('status', ['success' => 1, 'msg' => 'Storefront settings saved.']);
     }
 
-    public function orders(Catalog $catalog)
+    public function orders(Catalog $catalog, Request $request)
     {
         $store = $this->store();
-        $orders = StoreOrder::where('business_id', $store->business_id)->latest()->paginate(25);
-        return view('storefront::orders', compact('store', 'orders', 'catalog'));
+        app(\Modules\Storefront\Services\SaleSync::class)->reconcileDeletedSales($store->business_id);
+        $deletedSales = $request->query('view') === 'deleted';
+        $query = StoreOrder::where('business_id', $store->business_id);
+        $deletedSales ? $query->whereNotNull('sale_deleted_at') : $query->whereNull('sale_deleted_at');
+        $orders = $query->latest()->paginate(25)->withQueryString();
+        return view('storefront::orders', compact('store', 'orders', 'catalog', 'deletedSales'));
     }
 
     public function updateOrder(Request $request, int $id, Checkout $checkout)
     {
         $store = $this->store();
         $order = StoreOrder::where('business_id', $store->business_id)->findOrFail($id);
+        app(\Modules\Storefront\Services\SaleSync::class)->refreshDeletion($order);
+        abort_if($order->sale_deleted_at, 422, 'This order cannot be updated because its POS sale was deleted.');
         if ($request->input('action') === 'retry' && $order->verified_at && ! $order->transaction_id) {
             $checkout->fulfilPaid($order);
         } else {

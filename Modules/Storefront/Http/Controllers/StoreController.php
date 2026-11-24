@@ -131,6 +131,7 @@ class StoreController extends Controller
     {
         // Existing receipts remain available even when new ordering is disabled.
         $order = StoreOrder::where('business_id', $store->business_id)->where('token', $token)->firstOrFail();
+        app(\Modules\Storefront\Services\SaleSync::class)->refreshDeletion($order);
         return response()->view('storefront::order', compact('store', 'order', 'catalog'))->header('Cache-Control', 'no-store, private')->header('Referrer-Policy', 'no-referrer');
     }
 }
