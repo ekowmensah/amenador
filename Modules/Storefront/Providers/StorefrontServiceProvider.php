@@ -24,6 +24,9 @@ class StorefrontServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'storefront');
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+        view()->composer('welcome', function ($view) {
+            $view->with(app(\Modules\Storefront\Services\PublicStoreLink::class)->data());
+        });
         view()->composer('storefront::*', function ($view) {
             $store = $view->getData()['store'] ?? null;
             if ($store instanceof \Modules\Storefront\Entities\StoreSetting) {

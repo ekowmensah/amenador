@@ -462,4 +462,35 @@ class StorefrontTest extends TestCase
         $response = (new \Modules\Storefront\Http\Controllers\InstallController())->install();
         $this->assertSame(route('storefront.settings'), $response->getTargetUrl());
     }
+
+    public function test_public_homepage_promotes_the_matching_store_across_all_layouts(): void
+    {
+        config(['constants.public_catalog_business_id' => $this->store->business_id, 'storefront.default_business_id' => 999]);
+        session(['business.id' => 999]);
+        $url = route('storefront.index', $this->store);
+        foreach (config('public_page_layouts') as $layout => $preset) {
+            $html = view('welcome', ['pageLayout' => $layout, 'pagePreset' => $preset, 'publicBusinessName' => 'Test shop'])->render();
+            $this->assertStringContainsString('href="'.$url.'">Shop online', $html);
+            $this->assertStringContainsString('href="'.$url.'">Shop your favourites', $html);
+            $this->assertStringContainsString('checkout for store pickup', $html);
+            $this->assertStringContainsString('Staff sign in', $html);
+        }
+        $this->store->update(['delivery_enabled' => true, 'delivery_fee' => 5]);
+        $this->assertTrue(app(\Modules\Storefront\Services\PublicStoreLink::class)->data()['publicStoreDelivery']);
+    }
+
+    public function test_public_homepage_does_not_link_to_unavailable_or_uninstalled_stores(): void
+    {
+        config(['constants.public_catalog_business_id' => $this->store->business_id]);
+        $service = app(\Modules\Storefront\Services\PublicStoreLink::class);
+        $this->store->update(['enabled' => false]);
+        $this->assertNull($service->data()['publicStoreUrl']);
+        $html = view('welcome', ['pageLayout' => 'restaurant', 'pagePreset' => config('public_page_layouts.restaurant'), 'publicBusinessName' => 'Test shop'])->render();
+        $this->assertStringNotContainsString('Shop your favourites', $html);
+        $this->store->update(['enabled' => true]);
+        $this->store->location->update(['is_active' => false]);
+        $this->assertNull($service->data()['publicStoreUrl']);
+        Schema::drop('storefront_settings');
+        $this->assertNull($service->data()['publicStoreUrl']);
+    }
 }

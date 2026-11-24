@@ -1,4 +1,4 @@
-# Storefront module 1.3.2
+# Storefront module 1.3.3
 
 A standalone customer shop and checkout inside the POS. It reads POS products,
 variations, product images, default selling prices and location stock directly.
@@ -48,6 +48,16 @@ repository to show the badges; synchronization still works without that hook.
 
 This is a module for compatible POS hosts, not a generic Laravel or WordPress plugin.
 The host's models and accounting utilities are required.
+
+## Public homepage shop links
+
+The host's public homepage includes a Shop online navigation link and a Shop your
+favourites hero button, using the selected public/login palette. The module supplies
+the URL for the business selected by `PUBLIC_CATALOG_BUSINESS_ID`, independently of
+staff sessions and `STOREFRONT_BUSINESS_ID`. Links appear only when that business's
+store is enabled and has an active matching location. Delivery copy is shown only
+when delivery is configured. Deploy the host changes in `resources/views/welcome.blade.php`
+and `public/css/public-page-layouts.css` along with the module for this integration.
 
 ## Install on another system
 
@@ -226,5 +236,5 @@ The browser smoke test uses this workspace's existing Playwright dependency and
 Chromium installation. It tests the page and checkout without submitting an order.
 Adapt its development host/browser paths if running elsewhere.
 
-The build command produces `storage/app/module-packages/Storefront-1.3.2.zip` with
+The build command produces `storage/app/module-packages/Storefront-1.3.3.zip` with
 portable ZIP entry paths and no `.env`, database dumps, customer files or credentials.

@@ -18,5 +18,5 @@
     "Hms": true,
     "InboxReport": true,
     "CustomDashboard": true,
-    "Storefront": false
+    "Storefront": true
 }
